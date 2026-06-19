@@ -1,10 +1,15 @@
 
-import React from 'react'
+import { Route, Routes } from 'react-router'
+import './app.css'
+import Landing from './pages/Landing'
 
 const App = () => {
   return (
-    <div>sweetsoclockbypatty
-    </div>
+    <>
+      <Routes>
+        <Route path='/' element={<Landing />} />
+      </Routes>
+    </>
   )
 }
 
