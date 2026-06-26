@@ -2,7 +2,6 @@
   font-family: var(--ff-heading);
 }
 
-/* ================= BANNER ================= */
 
 .banner {
   background-color: var(--clr-primary-400);
@@ -17,7 +16,6 @@
   margin: 0;
 }
 
-/* ================= NAVIGATION ================= */
 
 .navigation {
   display: flex;
@@ -31,9 +29,12 @@
   position: block;
   /* max-height: 80px; */
   width: auto;
-}
+  background: transparent;
+  cursor: pointer;
+  margin: -10px -10px 0 0;
+  /* adjust as needed */
 
-/* ================= MOBILE ================= */
+}
 
 .primary-nav {
   display: none;
@@ -70,7 +71,6 @@
   cursor: pointer;
 }
 
-/* ================= SIDEBAR ================= */
 
 .sidebar {
   position: fixed;
@@ -89,7 +89,6 @@
   right: 0;
 }
 
-/* ================= MENU HEADER (NEW) ================= */
 
 .sidebar-header {
   display: flex;
@@ -102,6 +101,7 @@
 .sidebar-logo-big img {
   max-height: 1000px;
   width: auto;
+
 }
 
 /* CLOSE BUTTON */
@@ -113,7 +113,6 @@
   cursor: pointer;
 }
 
-/* ================= MENU LIST ================= */
 
 .mobile-menu {
   list-style: none;
@@ -128,13 +127,11 @@
   font-size: 1.1rem;
 }
 
-/* ================= CART ================= */
 
 .cart-content {
   margin-top: 2rem;
 }
 
-/* ================= DESKTOP ================= */
 
 @media (min-width: 64em) {
   .navigation {

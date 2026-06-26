@@ -1,0 +1,97 @@
+.hero-container {
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.hero-content {
+  position: relative;
+  max-width: 1700px;
+  margin: 0 auto;
+  /* Center the hero */
+  display: flex;
+  align-items: center;
+  min-height: 600px;
+  overflow: hidden;
+  /* Prevent horizontal overflow */
+}
+
+/* Border */
+
+.description-box {
+  position: absolute;
+  inset: 30px;
+  border: 3px solid var(--clr-primary-400);
+  z-index: 2;
+
+}
+
+/* IMAGE */
+
+.hero-image-wrapper {
+  flex: 0 0 60%;
+  margin-left: -30px;
+  /* Adjust or remove */
+  z-index: 2;
+}
+
+.hero-image {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  display: block;
+}
+
+/* TEXT */
+
+.hero-text {
+  width: 100%;
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 4;
+}
+
+.hero-text h4 {
+  margin: 0;
+}
+
+.hero-text h1 {
+  font-family: "pockota";
+  line-height: 1;
+}
+
+.hero-text p {
+  max-width: 450px;
+  line-height: 1.7;
+  margin-bottom: 35px;
+}
+
+/* MOBILE */
+
+@media (max-width: 64em) {
+
+  .hero-content {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .hero-image-wrapper {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .hero-image {
+    height: auto;
+  }
+
+  .hero-text {
+    width: 100%;
+    padding: 4rem;
+  }
+
+  .description-box {
+    inset: 15px;
+  }
+
+}

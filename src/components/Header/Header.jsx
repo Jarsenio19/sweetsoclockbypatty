@@ -40,7 +40,7 @@ const Header = () => {
 
           {/* Desktop Nav */}
           <nav className="primary-nav">
-            <ul>
+            <ul className="fw-semi-bold">
               <li>Shop</li>
               <li>Cookies</li>
               <li>Bakery</li>

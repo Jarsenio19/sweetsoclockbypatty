@@ -1,0 +1,11 @@
+.shop-btn {
+  width: 7rem;
+  padding: 4px 0;
+  margin: 4px 16px 4px 0;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
