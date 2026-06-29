@@ -11,6 +11,7 @@ const Header = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+
   return (
     <div className="header-container">
       <div className="wrapper">
