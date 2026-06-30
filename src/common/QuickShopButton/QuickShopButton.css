@@ -1,0 +1,29 @@
+.quick-shop {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  height: 30px;
+  padding: 10px 18px;
+  border: none;
+  cursor: pointer;
+  background: var(--clr-primary-400);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quick-shop:hover {
+  background: var(--clr-neutral-100);
+  color: var(--clr-primary-400);
+}
+
+@media (max-width: 768px) {
+  .quick-shop {
+    top: 10px;
+    right: 10px;
+    padding: 8px 14px;
+    font-size: 0.875rem;
+    /* 14px */
+  }
+}

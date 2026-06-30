@@ -1,6 +1,6 @@
 import "./Hero.css";
 import cookies from "../../assets/Cookies.png";
-import ShopNowBotton from "../../common/ShopNowBotton/ShopNowBotton";
+import ShopNowBotton from "../../common/ShopNowButton/ShopNowBotton";
 
 const Hero = () => {
   return (
