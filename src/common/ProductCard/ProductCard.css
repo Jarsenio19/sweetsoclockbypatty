@@ -1,0 +1,77 @@
+.sales-box {
+  width: 350px;
+  height: 520px;
+  /* ✅ forces all boxes same height */
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* FIXED selector (you had .sale-box before) */
+.sales-box img {
+  width: 100%;
+  height: 380px;
+  /* keeps image area consistent */
+  display: block;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 10px;
+}
+
+.product-info h3 {
+  margin: 0;
+  padding: 0 25px 25px 10px;
+  font-family: 'pokota';
+  border: 1px solid var(--clr-neutral-100);
+}
+
+.product-bottom {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid var(--clr-neutral-100);
+}
+
+.product-type,
+.product-price {
+  flex: 1;
+}
+
+.product-price {
+  flex: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* 👈 pushes text to right */
+  text-align: right;
+  padding: 5px 20px 5px 10px;
+}
+
+.price-row {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+/* if this for sale price */
+.price2 {
+  display: none;
+}
+
+.product-type {
+  border-right: 1px solid var(--clr-neutral-100);
+  padding: 5px;
+
+}
+
+.product-bottom span {
+  display: block;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.product-bottom h4 {
+  margin: 0;
+}
