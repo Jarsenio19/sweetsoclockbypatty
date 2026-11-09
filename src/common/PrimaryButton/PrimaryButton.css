@@ -1,0 +1,21 @@
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.read-more-btn {
+  font-family: "pokota";
+  background-color: var(--clr-primary-400);
+  color: white;
+  padding: 8px 10px;
+  border: 1px solid var(--clr-primary-400);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.read-more-btn:hover {
+  background-color: var(--clr-neutral-100);
+  color: var(--clr-primary-400);
+}

@@ -17,37 +17,37 @@ const CarouselCards = () => {
     {
       image: Product1,
       productType: "COOKIES",
-      title: "Wedding Favors",
+      name: "Wedding Favors",
       price: "$45",
     },
     {
       image: Product2,
       productType: "COOKIES",
-      title: "OG Chocolate Chip",
+      name: "OG Chocolate Chip",
       price: "$18",
     },
     {
       image: Product3,
       productType: "COOKIES",
-      title: "Double Chocolate Chip",
+      name: "Double Chocolate Chip",
       price: "$15",
     },
     {
       image: Product1,
       productType: "COOKIES",
-      title: "Sugar Cookies",
+      name: "Sugar Cookies",
       price: "$20",
     },
     {
       image: Product2,
       productType: "COOKIES",
-      title: "Red Velvet",
+      name: "Red Velvet",
       price: "$22",
     },
     {
       image: Product3,
       productType: "COOKIES",
-      title: "Peanut Butter",
+      name: "Peanut Butter",
       price: "$19",
     },
   ];
@@ -85,12 +85,12 @@ const CarouselCards = () => {
               transform: `translateX(-${index * (100 / visibleCards)}%)`,
             }}
           >
-            {cards.map((item, i) => (
-              <div className="carousel-item" key={i}>
+            {cards.map((item, index) => (
+              <div className="carousel-item" key={index}>
                 <ProductCard
                   image={item.image}
                   productType={item.productType}
-                  title={item.title}
+                  name={item.name}
                   price={item.price}
                 />
               </div>
