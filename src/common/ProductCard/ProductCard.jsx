@@ -1,17 +1,17 @@
 import './ProductCard.css'
 import QuickShopButton from '../QuickShopButton/QuickShopButton'
 
-const ProductCard = ({ image, productType, title, price }) => {
+const ProductCard = ({ image, productType, name, price }) => {
   return (
     <>
       <div className='sales-box'>
 
         <QuickShopButton />
 
-        <img src={image} alt={title} />
+        <img src={image} alt={name} />
 
         <div className='product-info fs-700 fw-regular text-neutral-100 bg-primary-400'>
-          <h3>{title}</h3>
+          <h3>{name}</h3>
 
           <div className='product-bottom'>
 

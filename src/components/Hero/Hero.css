@@ -21,7 +21,8 @@
   position: absolute;
   inset: 30px;
   border: 3px solid var(--clr-primary-400);
-  z-index: 2;
+  z-index: 3;
+  pointer-events: none;
 
 }
 
@@ -32,6 +33,7 @@
   margin-left: -30px;
   /* Adjust or remove */
   z-index: 2;
+  cursor: pointer;
 }
 
 .hero-image {
