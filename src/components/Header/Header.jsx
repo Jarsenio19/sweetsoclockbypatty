@@ -7,16 +7,18 @@ import { LiaUserSolid } from "react-icons/lia";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 import logo from "../../assets/SweetOclockLogo.png";
+import { dropdownData, navItems } from "../../data/Data";
 
 const Header = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
-  // Reference for detecting outside clicks
   const searchRef = useRef(null);
+  const navRef = useRef(null);
 
-  // Close search when clicking outside
+  // CLOSE SEARCH AND DROPDOWN WHEN CLICKING OUTSIDE
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -24,6 +26,13 @@ const Header = () => {
         !searchRef.current.contains(event.target)
       ) {
         setSearchOpen(false);
+      }
+
+      if (
+        navRef.current &&
+        !navRef.current.contains(event.target)
+      ) {
+        setActiveDropdown(null);
       }
     };
 
@@ -34,8 +43,16 @@ const Header = () => {
     };
   }, []);
 
+
+
+  // TOGGLE DROPDOWN
+  const toggleDropdown = (key) => {
+    setActiveDropdown((prev) => (prev === key ? null : key));
+  };
+
   return (
     <div className="header-container">
+
       <div className="wrapper">
 
         {/* PROMO BANNER */}
@@ -48,30 +65,82 @@ const Header = () => {
         {/* NAVIGATION */}
         <div className="navigation">
 
+          {/* MOBILE MENU BUTTON */}
           <button
             className="menu-btn"
             onClick={() => setMenuOpen(true)}
+            aria-label="Open menu"
           >
             <GiHamburgerMenu className="hamburger-icon" />
           </button>
 
+          {/* LOGO */}
           <div className="primary-logo">
             <img src={logo} alt="Sweet O'Clock Logo" />
           </div>
 
-          <nav className="primary-nav">
+          {/* DESKTOP NAVIGATION */}
+          <nav className="primary-nav" ref={navRef}>
             <ul className="fw-semi-bold">
-              <li>Shop</li>
-              <li>Cookies</li>
-              <li>Bakery</li>
-              <li>Gifting</li>
-              <li>Our Story</li>
+
+              {navItems.map((item) => (
+                <li
+                  className="nav-item"
+                  key={item.key}
+                  onMouseEnter={() => setActiveDropdown(item.key)}
+                  onMouseLeave={() => setActiveDropdown(null)}
+                >
+
+                  <button
+                    className={`nav-link ${activeDropdown === item.key ? "active" : ""
+                      }`}
+                    onClick={() => toggleDropdown(item.key)}
+                    aria-expanded={activeDropdown === item.key}
+                  >
+                    {item.label}
+                  </button>
+
+                  {/* DROPDOWN */}
+                  <div
+                    className={`nav-dropdown ${activeDropdown === item.key ? "show" : ""
+                      }`}
+                  >
+
+                    {dropdownData[item.key].columns.map((column, index) => (
+                      <div className="dropdown-column" key={index}>
+
+                        <h4>{column.title}</h4>
+
+                        <ul>
+                          {column.links.map((link, linkIndex) => (
+                            <li
+                              key={linkIndex}
+                              onClick={() => setActiveDropdown(null)}
+                            >
+                              {linkIndex === column.links.length - 1 ? (
+                                <strong>{link}</strong>
+                              ) : (
+                                link
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+
+                      </div>
+                    ))}
+
+                  </div>
+
+                </li>
+              ))}
+
             </ul>
           </nav>
 
+          {/* NAV ICONS */}
           <div className="nav-icons">
 
-            {/* SEARCH ICON AND DROPDOWN */}
+            {/* SEARCH */}
             <div className="search-container" ref={searchRef}>
 
               <IoSearchOutline
@@ -83,10 +152,12 @@ const Header = () => {
                 className={`search-dropdown ${searchOpen ? "active" : ""
                   }`}
               >
+
                 <form
                   className="search-form"
                   onSubmit={(e) => e.preventDefault()}
                 >
+
                   <IoSearchOutline className="search-form-icon" />
 
                   <input
@@ -101,19 +172,24 @@ const Header = () => {
                   >
                     ×
                   </button>
+
                 </form>
+
               </div>
 
             </div>
 
+            {/* USER */}
             <LiaUserSolid className="user-icon" />
 
+            {/* CART */}
             <IoCartOutline
               className="cart-icon"
               onClick={() => setCartOpen(true)}
             />
 
           </div>
+
         </div>
 
         {/* CART SIDEBAR */}
@@ -152,16 +228,17 @@ const Header = () => {
           </div>
 
           <ul className="mobile-menu">
-            <li>Shop</li>
-            <li>Cookies</li>
-            <li>Bakery</li>
-            <li>Gifting</li>
-            <li>Our Story</li>
+            {navItems.map((item) => (
+              <li key={item.key} onClick={() => setMenuOpen(false)}>
+                {item.label}
+              </li>
+            ))}
           </ul>
 
         </div>
 
       </div>
+
     </div>
   );
 };

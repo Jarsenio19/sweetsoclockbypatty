@@ -1,10 +1,5 @@
 .header-container {
   font-family: var(--ff-heading);
-
-}
-
-.header-container {
-  font-family: var(--ff-heading);
   position: relative;
   z-index: 100;
 }
@@ -13,7 +8,10 @@
   position: relative;
 }
 
-/* SEARCH DROPDOWN */
+/* =========================
+   SEARCH DROPDOWN
+========================= */
+
 .search-dropdown {
   position: absolute;
   top: 90%;
@@ -38,6 +36,7 @@
 }
 
 /* SEARCH INPUT */
+
 .search-form {
   width: min(820px, 90%);
   height: 60px;
@@ -75,6 +74,10 @@
 }
 
 
+/* =========================
+   BANNER
+========================= */
+
 .banner {
   background-color: var(--clr-primary-400);
   height: 30px;
@@ -89,6 +92,10 @@
 }
 
 
+/* =========================
+   NAVIGATION
+========================= */
+
 .navigation {
   display: flex;
   align-items: center;
@@ -99,13 +106,10 @@
 
 .primary-logo img {
   position: block;
-  /* max-height: 80px; */
   width: auto;
   background: transparent;
   cursor: pointer;
   margin: -10px -10px 0 0;
-  /* adjust as needed */
-
 }
 
 .primary-nav {
@@ -123,7 +127,11 @@
   height: 28px;
 }
 
-/* icons */
+
+/* =========================
+   NAVIGATION ICONS
+========================= */
+
 .nav-icons {
   display: flex;
   align-items: center;
@@ -144,16 +152,149 @@
 }
 
 
+/* =========================
+   DESKTOP DROPDOWNS
+========================= */
+
+.primary-nav ul {
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+
+  margin: 0;
+  padding: 0;
+}
+
+.primary-nav .nav-item {
+  position: relative;
+}
+
+.primary-nav .nav-link {
+  display: block;
+
+  padding: 1.5rem;
+
+  border: none;
+  background: transparent;
+
+  font-family: inherit;
+  font-size: inherit;
+
+  cursor: pointer;
+  color: inherit;
+}
+
+.primary-nav .nav-link:hover,
+.primary-nav .nav-link.active {
+  background: var(--clr-primary-400);
+  color: white;
+}
+
+
+/* DROPDOWN CONTAINER */
+
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  min-width: 220px;
+  width: max-content;
+
+  background: white;
+
+  border: 1px solid var(--clr-primary-400);
+
+  padding: 18px 22px;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  gap: 28px;
+
+  z-index: 9999;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.nav-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+
+/* DROPDOWN COLUMN */
+
+.dropdown-column {
+  min-width: 150px;
+}
+
+.dropdown-column h4 {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+
+  border-bottom: 1px solid #d5dfd5;
+}
+
+.dropdown-column ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  gap: 0;
+}
+
+.dropdown-column li {
+  width: 100%;
+  padding: 5px 0;
+
+  font-size: 13px;
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.dropdown-column li:hover {
+  color: var(--clr-primary-400);
+}
+
+.dropdown-column li strong {
+  font-weight: 700;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
 .sidebar {
   position: fixed;
   top: 0;
   right: -100%;
+
   width: min(550px, 90%);
   height: 100vh;
+
   background: white;
+
   transition: right 0.3s ease;
+
   z-index: 1000;
+
   box-shadow: -4px 0 15px rgba(0, 0, 0, 0.15);
+
   padding: 1.5rem;
 }
 
@@ -162,6 +303,10 @@
 }
 
 
+/* =========================
+   MOBILE SIDEBAR
+========================= */
+
 .sidebar-header {
   display: flex;
   align-items: center;
@@ -169,14 +314,11 @@
   margin-bottom: 2rem;
 }
 
-/* BIG LOGO */
 .sidebar-logo-big img {
   max-height: 1000px;
   width: auto;
-
 }
 
-/* CLOSE BUTTON */
 .close-btn {
   border: none;
   background: transparent;
@@ -184,7 +326,6 @@
   font-size: 2rem;
   cursor: pointer;
 }
-
 
 .mobile-menu {
   list-style: none;
@@ -200,12 +341,21 @@
 }
 
 
+/* =========================
+   CART
+========================= */
+
 .cart-content {
   margin-top: 2rem;
 }
 
 
+/* =========================
+   DESKTOP RESPONSIVE
+========================= */
+
 @media (min-width: 64em) {
+
   .navigation {
     padding: 0 100px;
   }
@@ -221,24 +371,41 @@
   .primary-nav ul {
     display: flex;
     list-style: none;
-
     gap: 1rem;
 
     margin: 0;
     padding: 0;
   }
 
-  .primary-nav li {
-    padding: 1.5rem;
-    cursor: pointer;
+  .primary-nav .nav-item {
+    position: relative;
   }
 
-  .primary-nav li:hover {
-    background: var(--clr-primary-400);
+  .primary-nav .nav-link {
+    padding: 1.5rem;
+    cursor: pointer;
   }
 
   .search-icon,
   .user-icon {
     display: block;
   }
+
+}
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 63.99em) {
+
+  .primary-nav {
+    display: none;
+  }
+
+  .nav-dropdown {
+    display: none;
+  }
+
 }

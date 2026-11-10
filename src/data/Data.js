@@ -57,3 +57,133 @@ export const cards = [
   },
 ];
 
+
+
+export const dropdownData = {
+  shop: {
+    columns: [
+      {
+        title: "SHOP BY PRODUCT",
+        links: [
+          "Cookies",
+          "Bakery",
+          "Limited Edition",
+          "Merch",
+          "Shop All",
+        ],
+      },
+      {
+        title: "SHOP GIFTING",
+        links: [
+          "Baskets",
+          "Gift Sets",
+          "Party Favors",
+          "Corporate Gifting",
+          "Events",
+          "Shop All Gifts",
+        ],
+      },
+    ],
+  },
+
+  cookies: {
+    columns: [
+      {
+        title: "SHOP COOKIES",
+        links: [
+          "Chocolate Chip Cookies",
+          "Classic Cookies",
+          "Cookie Assortments",
+          "Limited Edition",
+          "Shop All Cookies",
+        ],
+      },
+    ],
+  },
+
+  bakery: {
+    columns: [
+      {
+        title: "SHOP BAKERY",
+        links: [
+          "Brownies",
+          "Cakes",
+          "Pastries",
+          "Bakery Favorites",
+          "Shop All Bakery",
+        ],
+      },
+    ],
+  },
+
+  gifting: {
+    columns: [
+      {
+        title: "SHOP GIFTS",
+        links: [
+          "Gift Baskets",
+          "Gift Sets",
+          "Cookie Gifts",
+          "Party Favors",
+          "Shop All Gifts",
+        ],
+      },
+      {
+        title: "SPECIAL OCCASIONS",
+        links: [
+          "Birthday Gifts",
+          "Holiday Gifts",
+          "Thank You Gifts",
+          "Corporate Gifts",
+        ],
+      },
+    ],
+  },
+
+  story: {
+    columns: [
+      {
+        title: "ABOUT US",
+        links: [
+          "Our History",
+          "Our Ingredients",
+          "Our Philosophy",
+          "Our Team",
+        ],
+      },
+    ],
+  },
+
+  corporate: {
+    columns: [
+      {
+        title: "CORPORATE GIFTING",
+        links: [
+          "Corporate Gift Boxes",
+          "Custom Gifts",
+          "Business Orders",
+          "Bulk Orders",
+        ],
+      },
+      {
+        title: "BUSINESS SERVICES",
+        links: [
+          "Personalized Gifts",
+          "Client Appreciation",
+          "Employee Gifts",
+          "Contact Us",
+        ],
+      },
+    ],
+  },
+};
+
+export const navItems = [
+  { label: "Shop", key: "shop" },
+  { label: "Cookies", key: "cookies" },
+  { label: "Bakery", key: "bakery" },
+  { label: "Gifting", key: "gifting" },
+  { label: "Our Story", key: "story" },
+  { label: "Corporate Gifting", key: "corporate" },
+];
+
