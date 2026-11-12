@@ -1,5 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 
+{/* LOGO IMAGE!!*/ }
+import LogoImage from "../assets/SweetOclockLogo.png";
+
+export const logoData = {
+  image: LogoImage,
+  alt: "Sweet O'Clock Logo",
+};
+
+
+
 import HeroImage from "../assets/Cookies.png";
 
 export const heroData = [

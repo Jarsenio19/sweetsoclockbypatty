@@ -1,0 +1,138 @@
+/* 
+   DESKTOP NAVIGATION
+ */
+
+.primary-nav {
+  display: none;
+}
+
+.primary-nav>ul {
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.primary-nav .nav-item {
+  position: relative;
+}
+
+.primary-nav .nav-link {
+  display: block;
+  padding: 1.5rem;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+.primary-nav .nav-link:hover,
+.primary-nav .nav-link.active {
+  background: var(--clr-primary-400);
+  color: white;
+}
+
+/* 
+   DROPDOWN CONTAINER
+ */
+
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  width: max-content;
+  background: white;
+  border: 1px solid var(--clr-primary-400);
+  padding: 18px 22px;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  gap: 28px;
+
+  z-index: 9999;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.nav-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* 
+   DROPDOWN COLUMN
+ */
+
+.dropdown-column {
+  min-width: 150px;
+}
+
+.dropdown-column h4 {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #d5dfd5;
+}
+
+.dropdown-column ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0;
+}
+
+.dropdown-column li {
+  width: 100%;
+  padding: 5px 0;
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.dropdown-column li:hover {
+  color: var(--clr-primary-400);
+}
+
+.dropdown-column li strong {
+  font-weight: 700;
+}
+
+/* 
+   DESKTOP RESPONSIVE
+ */
+
+@media (min-width: 64em) {
+  .primary-nav {
+    display: block;
+  }
+}
+
+/* 
+   MOBILE RESPONSIVE
+ */
+
+@media (max-width: 63.99em) {
+  .primary-nav {
+    display: none;
+  }
+
+  .nav-dropdown {
+    display: none;
+  }
+}

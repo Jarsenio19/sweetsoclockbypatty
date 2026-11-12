@@ -1,0 +1,42 @@
+/*  CART ICON */
+
+.cart-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+/* CART SIDEBAR */
+
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: min(550px, 90%);
+  height: 100vh;
+  background: white;
+  transition: right 0.3s ease;
+  z-index: 1000;
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.cart-sidebar.active {
+  right: 0;
+}
+
+/* CLOSE BUTTON */
+
+.cart-close-btn {
+  border: none;
+  background: transparent;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* CART CONTENT */
+
+.cart-content {
+  margin-top: 2rem;
+}

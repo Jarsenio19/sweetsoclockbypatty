@@ -1,0 +1,35 @@
+/* SEARCH CONTAINER */
+
+.search-container {
+  position: static;
+}
+
+/* SEARCH BUTTON */
+
+.search-toggle {
+  display: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* SEARCH ICON */
+
+.search-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+/* DESKTOP RESPONSIVE */
+
+@media (min-width: 64em) {
+
+  .search-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+}

@@ -1,0 +1,25 @@
+/* =========================
+   HAMBURGER BUTTON
+========================= */
+
+.hamburger-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.hamburger-icon {
+  width: 28px;
+  height: 28px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (min-width: 64em) {
+  .hamburger-button {
+    display: none;
+  }
+}
