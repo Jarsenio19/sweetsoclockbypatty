@@ -1,0 +1,237 @@
+/* SIGN IN PAGE */
+
+.signin-page {
+  min-height: 100vh;
+  width: 100%;
+  background: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+  padding: 40px 20px 25px;
+  box-sizing: border-box;
+}
+
+/* LOGO */
+
+.signin-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.signin-logo img {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* SIGN IN CONTENT */
+
+.signin-content {
+  width: 100%;
+  max-width: 370px;
+  margin: auto 0;
+}
+
+/* HEADING */
+
+.signin-heading {
+  margin-bottom: 20px;
+}
+
+.signin-heading h1 {
+  font-size: var(--fs-700);
+  font-weight: var(--fw-bold);
+  color: #202020;
+  margin: 0 0 6px;
+}
+
+.signin-heading p {
+  font-size: var(--fs-300);
+  color: #777777;
+  margin: 0;
+}
+
+/* SHOP BUTTON */
+
+.shop-button {
+  width: 100%;
+  height: 49px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: var(--clr-primary-400);
+  color: #ffffff;
+
+  font-size: var(--fs-400);
+  font-weight: var(--fw-semi-bold);
+
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.shop-button:hover {
+  filter: brightness(0.92);
+}
+
+/* DIVIDER */
+
+.signin-divider {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  margin: 17px 0;
+}
+
+.signin-divider span {
+  flex: 1;
+  height: 1px;
+  background: #dddddd;
+}
+
+.signin-divider p {
+  font-size: var(--fs-300);
+  color: #888888;
+  margin: 0;
+}
+
+/* EMAIL INPUT */
+
+.email-input {
+  width: 100%;
+  height: 49px;
+
+  display: flex;
+  align-items: center;
+
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+
+  padding: 0 12px;
+  box-sizing: border-box;
+
+  transition: 0.3s ease;
+}
+
+.email-input:focus-within {
+  border-color: var(--clr-primary-400);
+  box-shadow: 0 0 0 2px hsla(11, 65%, 57%, 0.12);
+}
+
+.email-input input {
+  flex: 1;
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  font-size: var(--fs-300);
+  color: #222222;
+
+  background: transparent;
+}
+
+.email-input input::placeholder {
+  color: #777777;
+}
+
+.email-input button {
+  border: none;
+  background: transparent;
+
+  font-size: var(--fs-800);
+  color: #222222;
+
+  cursor: pointer;
+
+  padding: 0 3px;
+  transition: 0.2s ease;
+}
+
+.email-input button:hover {
+  color: var(--clr-primary-400);
+}
+
+/* NEWSLETTER CHECKBOX */
+
+.newsletter-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-top: 14px;
+
+  font-size: var(--fs-300);
+  color: #222222;
+
+  cursor: pointer;
+}
+
+.newsletter-option input {
+  width: 17px;
+  height: 17px;
+
+  accent-color: var(--clr-primary-400);
+  cursor: pointer;
+}
+
+/* TERMS */
+
+.signin-terms {
+  text-align: center;
+  margin-top: 22px;
+}
+
+.signin-terms p {
+  font-size: var(--fs-100);
+  color: #888888;
+  margin: 0;
+}
+
+.signin-terms a {
+  color: #555555;
+  text-decoration: underline;
+}
+
+/* FOOTER */
+
+.signin-footer {
+  margin-top: auto;
+  padding-top: 30px;
+}
+
+.signin-footer a {
+  color: var(--clr-primary-400);
+  font-size: var(--fs-300);
+  text-decoration: none;
+}
+
+.signin-footer a:hover {
+  text-decoration: underline;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 480px) {
+  .signin-page {
+    padding: 30px 22px 25px;
+  }
+
+  .signin-logo img {
+    width: 120px;
+  }
+
+  .signin-content {
+    max-width: 100%;
+  }
+
+  .signin-heading h1 {
+    font-size: var(--fs-700);
+  }
+}

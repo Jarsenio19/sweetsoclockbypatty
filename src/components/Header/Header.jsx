@@ -1,7 +1,7 @@
 
 import "./Header.css";
-
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 import { LiaUserSolid } from "react-icons/lia";
 
@@ -18,9 +18,10 @@ import HamburgerButton from "../../common/HamburgerButton/HamburgerButton";
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const navigate = useNavigate();
+
   return (
     <div className="header-container">
-
       <div className="wrapper">
 
         <Banner />
@@ -28,35 +29,34 @@ const Header = () => {
         <div className="navigation">
 
           {/* MOBILE MENU BUTTON */}
-
           <HamburgerButton
             onClick={() => setMenuOpen(true)}
           />
 
           {/* LOGO */}
-
           <Logo />
 
           {/* DESKTOP NAVIGATION */}
-
           <Navigation />
 
           {/* NAVIGATION ICONS */}
-
           <div className="nav-icons">
 
             <Search />
 
-            <LiaUserSolid className="user-icon" />
+            {/* USER ICON */}
+            <LiaUserSolid
+              className="user-icon"
+              onClick={() => navigate("/signin")}
+              style={{ cursor: "pointer" }}
+            />
 
             <Cart />
 
           </div>
-
         </div>
 
         {/* MOBILE MENU */}
-
         <MobileMenu
           isOpen={menuOpen}
           onClose={() => setMenuOpen(false)}
@@ -64,7 +64,6 @@ const Header = () => {
         />
 
       </div>
-
     </div>
   );
 };

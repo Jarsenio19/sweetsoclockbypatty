@@ -1,10 +1,11 @@
-import React from 'react'
-import Logo from '../common/Logo/Logo'
+import SignInContent from "../components/SignInContent/SignInContent";
 
 const SignIn = () => {
   return (
-    <Logo />
-  )
-}
+    <>
+      <SignInContent />
+    </>
+  );
+};
 
-export default SignIn
+export default SignIn;
