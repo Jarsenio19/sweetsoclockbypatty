@@ -1,6 +1,10 @@
+
 import { v4 as uuidv4 } from "uuid";
 
-{/* LOGO IMAGE!!*/ }
+// ===============================
+// LOGO
+// ===============================
+
 import LogoImage from "../assets/SweetOclockLogo.png";
 
 export const logoData = {
@@ -8,7 +12,19 @@ export const logoData = {
   alt: "Sweet O'Clock Logo",
 };
 
+// ===============================
+// BANNER
+// ===============================
 
+export const bannerData = [
+  "Get a head start on holiday gifting! Save 20% sitewide through 11/16. No code needed. Excludes corporate gifts.",
+  "NEW! Limited-Edition Fall Flavors | Shop Now",
+  "Free Standard Shipping on Orders $25+",
+];
+
+// ===============================
+// HERO
+// ===============================
 
 import HeroImage from "../assets/Cookies.png";
 
@@ -25,7 +41,9 @@ export const heroData = [
   },
 ];
 
-
+// ===============================
+// CARDS
+// ===============================
 
 import Design1 from "../assets/Card/Design1.png";
 import Design2 from "../assets/Card/Design2.png";
@@ -67,7 +85,9 @@ export const cards = [
   },
 ];
 
-
+// ===============================
+// DROPDOWN DATA
+// ===============================
 
 export const dropdownData = {
   shop: {
@@ -188,6 +208,10 @@ export const dropdownData = {
   },
 };
 
+// ===============================
+// NAVIGATION
+// ===============================
+
 export const navItems = [
   { label: "Shop", key: "shop" },
   { label: "Cookies", key: "cookies" },
@@ -197,3 +221,87 @@ export const navItems = [
   { label: "Corporate Gifting", key: "corporate" },
 ];
 
+// ===============================
+// PRODUCT IMAGES
+// ===============================
+
+import Product1 from "../assets/Product/Product1.png";
+import Product2 from "../assets/Product/Product2.png";
+import Product3 from "../assets/Product/Product3.png";
+
+// ===============================
+// SHOP PRODUCTS
+// ===============================
+
+export const carouselCardsData = [
+  {
+    image: Product1,
+    productType: "COOKIES",
+    name: "Wedding Favors",
+    price: "$45",
+  },
+  {
+    image: Product2,
+    productType: "COOKIES",
+    name: "OG Chocolate Chip",
+    price: "$18",
+  },
+  {
+    image: Product3,
+    productType: "COOKIES",
+    name: "Double Chocolate Chip",
+    price: "$15",
+  },
+  {
+    image: Product1,
+    productType: "COOKIES",
+    name: "Sugar Cookies",
+    price: "$20",
+  },
+  {
+    image: Product2,
+    productType: "COOKIES",
+    name: "Red Velvet",
+    price: "$22",
+  },
+  {
+    image: Product3,
+    productType: "COOKIES",
+    name: "Peanut Butter",
+    price: "$19",
+  },
+];
+
+// ===============================
+// SHOP FILTER OPTIONS
+// ===============================
+
+// PRODUCT LINE
+export const categories = [
+  "Bakery Items",
+  "Cookies",
+  "Gifting",
+  "Merch",
+];
+
+// FLAVOR
+export const flavors = [
+  "Chocolate",
+  "Vanilla",
+  "Peanut Butter",
+  "Sugar",
+];
+
+// DIETARY OPTIONS
+export const dietaryOptions = [
+  "Gluten Free",
+  "Nut Free",
+  "Vegan",
+];
+
+// BASKET OPTIONS
+export const basketOptions = [
+  "Cookies",
+  "Brownies",
+  "Assorted Treats",
+];

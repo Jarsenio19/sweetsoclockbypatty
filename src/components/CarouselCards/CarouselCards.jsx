@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import "./CarouselCards.css";
 
@@ -8,55 +9,15 @@ import {
   FaCircleChevronRight,
 } from "react-icons/fa6";
 
-import Product1 from "../../assets/Product/Product1.png";
-import Product2 from "../../assets/Product/Product2.png";
-import Product3 from "../../assets/Product/Product3.png";
+import { carouselCardsData } from "../../data/Data";
 
 const CarouselCards = () => {
-  const cards = [
-    {
-      image: Product1,
-      productType: "COOKIES",
-      name: "Wedding Favors",
-      price: "$45",
-    },
-    {
-      image: Product2,
-      productType: "COOKIES",
-      name: "OG Chocolate Chip",
-      price: "$18",
-    },
-    {
-      image: Product3,
-      productType: "COOKIES",
-      name: "Double Chocolate Chip",
-      price: "$15",
-    },
-    {
-      image: Product1,
-      productType: "COOKIES",
-      name: "Sugar Cookies",
-      price: "$20",
-    },
-    {
-      image: Product2,
-      productType: "COOKIES",
-      name: "Red Velvet",
-      price: "$22",
-    },
-    {
-      image: Product3,
-      productType: "COOKIES",
-      name: "Peanut Butter",
-      price: "$19",
-    },
-  ];
-
   const visibleCards = 3;
+
   const [index, setIndex] = useState(0);
 
   const next = () => {
-    if (index < cards.length - visibleCards) {
+    if (index < carouselCardsData.length - visibleCards) {
       setIndex(index + 1);
     }
   };
@@ -70,6 +31,7 @@ const CarouselCards = () => {
   return (
     <section className="container">
       <div className="carousel-content">
+
         <h1 className="text-primary-400 fw-bold fs-1100">
           Best Sellers
         </h1>
@@ -85,7 +47,7 @@ const CarouselCards = () => {
               transform: `translateX(-${index * (100 / visibleCards)}%)`,
             }}
           >
-            {cards.map((item, index) => (
+            {carouselCardsData.map((item, index) => (
               <div className="carousel-item" key={index}>
                 <ProductCard
                   image={item.image}
@@ -99,6 +61,7 @@ const CarouselCards = () => {
         </div>
 
         <div className="carousel-controls">
+
           <button
             className="nav-btn"
             onClick={prev}
@@ -110,10 +73,13 @@ const CarouselCards = () => {
           <button
             className="nav-btn"
             onClick={next}
-            disabled={index >= cards.length - visibleCards}
+            disabled={
+              index >= carouselCardsData.length - visibleCards
+            }
           >
             <FaCircleChevronRight />
           </button>
+
         </div>
       </div>
     </section>
