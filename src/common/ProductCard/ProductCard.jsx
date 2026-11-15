@@ -1,3 +1,4 @@
+
 import './ProductCard.css'
 import QuickShopButton from '../QuickShopButton/QuickShopButton'
 
@@ -11,6 +12,7 @@ const ProductCard = ({ image, productType, name, price }) => {
         <img src={image} alt={name} />
 
         <div className='product-info fs-700 fw-regular text-neutral-100 bg-primary-400'>
+
           <h3>{name}</h3>
 
           <div className='product-bottom'>
@@ -22,6 +24,7 @@ const ProductCard = ({ image, productType, name, price }) => {
 
             <div className='product-price'>
               <span className='fs-100'>PRICE</span>
+
               <div className='price-row'>
                 <h4 className='price1'>{price}</h4>
 
