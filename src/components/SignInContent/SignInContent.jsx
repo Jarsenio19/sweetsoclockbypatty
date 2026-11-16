@@ -1,10 +1,14 @@
 
-import React from "react";
+import React, { useState } from "react";
 import "./SignInContent.css";
 
 import Logo from "../../common/Logo/Logo";
+import TermsModal from "../Modal/TermsModal";
+import PrivacyModal from "../Modal/PrivacyModal";
 
 const SignInContent = () => {
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,36 +18,32 @@ const SignInContent = () => {
   return (
     <div className="signin-page">
 
-      {/* LOGO */}
       <div className="signin-logo">
         <Logo />
       </div>
 
-      {/* SIGN IN CONTENT */}
       <div className="signin-content">
 
-        {/* HEADING */}
         <div className="signin-heading">
           <h1>Sign in</h1>
           <p>Sign in or create an account</p>
         </div>
 
-        {/* FORM */}
         <form onSubmit={handleSubmit}>
 
-          {/* SHOP BUTTON */}
-          <button type="button" className=".bg-primary-400 shop-button">
+          <button
+            type="button"
+            className="shop-button"
+          >
             Continue with shop
           </button>
 
-          {/* DIVIDER */}
           <div className="signin-divider">
             <span></span>
             <p>or</p>
             <span></span>
           </div>
 
-          {/* EMAIL INPUT */}
           <div className="email-input">
             <input
               type="email"
@@ -59,7 +59,6 @@ const SignInContent = () => {
             </button>
           </div>
 
-          {/* NEWSLETTER CHECKBOX */}
           <label className="newsletter-option">
             <input
               type="checkbox"
@@ -72,20 +71,40 @@ const SignInContent = () => {
 
         </form>
 
-        {/* TERMS */}
         <div className="signin-terms">
           <p>
             By continuing, you agree to our{" "}
-            <a href="/terms">Terms of service</a>
+            <button
+              type="button"
+              onClick={() => setIsTermsOpen(true)}
+            >
+              Terms of service
+            </button>
           </p>
         </div>
 
       </div>
 
-      {/* FOOTER */}
       <div className="signin-footer">
-        <a href="/privacy">Privacy policy</a>
+        <button
+          type="button"
+          onClick={() => setIsPrivacyOpen(true)}
+        >
+          Privacy policy
+        </button>
       </div>
+
+      {/* TERMS MODAL */}
+      <TermsModal
+        isOpen={isTermsOpen}
+        onClose={() => setIsTermsOpen(false)}
+      />
+
+      {/* PRIVACY MODAL */}
+      {/* <PrivacyModal
+        isOpen={isPrivacyOpen}
+        onClose={() => setIsPrivacyOpen(false)}
+      /> */}
 
     </div>
   );
