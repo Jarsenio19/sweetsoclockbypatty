@@ -24,19 +24,19 @@ const PrivacyModal = ({ isOpen, onClose }) => {
       document.removeEventListener("keydown", handleEscape);
       document.body.style.overflow = "";
     };
+
   }, [isOpen, onClose]);
 
-  // Don't render if modal is closed
   if (!isOpen) return null;
 
   return (
     <div
-      className="terms-overlay"
+      className="privacy-overlay"
       onClick={onClose}
     >
 
       <div
-        className="terms-modal"
+        className="privacy-modal"
         role="dialog"
         aria-modal="true"
         aria-labelledby="privacy-title"
@@ -44,15 +44,15 @@ const PrivacyModal = ({ isOpen, onClose }) => {
       >
 
         {/* MODAL HEADER */}
-        <div className="terms-modal-header">
+        <div className="privacy-modal-header">
 
           <h2 id="privacy-title">
-            Privacy policy
+            {privacyData.title}
           </h2>
 
           <button
             type="button"
-            className="terms-close"
+            className="privacy-close"
             onClick={onClose}
             aria-label="Close privacy policy"
           >
@@ -62,10 +62,55 @@ const PrivacyModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* MODAL BODY */}
-        <div className="terms-modal-content">
+        <div className="privacy-modal-content">
 
-          <div className="terms-document">
-            {privacyData}
+          <div className="privacy-document">
+
+            {privacyData.sections.map((section, index) => (
+
+              <section
+                className="privacy-section"
+                key={index}
+              >
+
+                {/* SECTION HEADING */}
+                {section.heading && (
+                  <h3>{section.heading}</h3>
+                )}
+
+                {/* PARAGRAPHS */}
+                {section.paragraphs?.map((paragraph, paragraphIndex) => (
+                  <p key={paragraphIndex}>
+                    {paragraph}
+                  </p>
+                ))}
+
+                {/* CARDS */}
+                {section.type === "cards" && (
+                  <div className="privacy-cards">
+
+                    {section.items.map((item, itemIndex) => (
+
+                      <div
+                        className="privacy-card"
+                        key={itemIndex}
+                      >
+
+                        <h4>{item.title}</h4>
+
+                        <p>{item.description}</p>
+
+                      </div>
+
+                    ))}
+
+                  </div>
+                )}
+
+              </section>
+
+            ))}
+
           </div>
 
         </div>

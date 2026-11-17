@@ -4,6 +4,7 @@ import "./app.css";
 import Landing from "./pages/Landing";
 import SignIn from "./pages/SignIn";
 import Shop from "./pages/Shop";
+import Checkout from "./pages/Checkout";
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <Route path="/" element={<Landing />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/shop" element={<Shop />} />
+      {/* <Route path="/checkout" element={<Checkout />} /> */}
     </Routes>
   );
 };

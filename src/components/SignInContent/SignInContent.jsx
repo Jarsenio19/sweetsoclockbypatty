@@ -18,19 +18,24 @@ const SignInContent = () => {
   return (
     <div className="signin-page">
 
+      {/* LOGO */}
       <div className="signin-logo">
         <Logo />
       </div>
 
+      {/* SIGN IN CONTENT */}
       <div className="signin-content">
 
+        {/* HEADING */}
         <div className="signin-heading">
           <h1>Sign in</h1>
           <p>Sign in or create an account</p>
         </div>
 
+        {/* SIGN IN FORM */}
         <form onSubmit={handleSubmit}>
 
+          {/* SHOP BUTTON */}
           <button
             type="button"
             className="shop-button"
@@ -38,16 +43,19 @@ const SignInContent = () => {
             Continue with shop
           </button>
 
+          {/* DIVIDER */}
           <div className="signin-divider">
             <span></span>
             <p>or</p>
             <span></span>
           </div>
 
+          {/* EMAIL INPUT */}
           <div className="email-input">
             <input
               type="email"
               placeholder="Email"
+              aria-label="Email address"
               required
             />
 
@@ -59,6 +67,7 @@ const SignInContent = () => {
             </button>
           </div>
 
+          {/* NEWSLETTER OPTION */}
           <label className="newsletter-option">
             <input
               type="checkbox"
@@ -71,6 +80,7 @@ const SignInContent = () => {
 
         </form>
 
+        {/* TERMS */}
         <div className="signin-terms">
           <p>
             By continuing, you agree to our{" "}
@@ -85,6 +95,7 @@ const SignInContent = () => {
 
       </div>
 
+      {/* FOOTER */}
       <div className="signin-footer">
         <button
           type="button"
@@ -101,10 +112,10 @@ const SignInContent = () => {
       />
 
       {/* PRIVACY MODAL */}
-      {/* <PrivacyModal
+      <PrivacyModal
         isOpen={isPrivacyOpen}
         onClose={() => setIsPrivacyOpen(false)}
-      /> */}
+      />
 
     </div>
   );

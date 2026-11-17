@@ -24,9 +24,9 @@ const TermsModal = ({ isOpen, onClose }) => {
       document.removeEventListener("keydown", handleEscape);
       document.body.style.overflow = "";
     };
+
   }, [isOpen, onClose]);
 
-  // Don't render if modal is closed
   if (!isOpen) return null;
 
   return (
@@ -47,7 +47,7 @@ const TermsModal = ({ isOpen, onClose }) => {
         <div className="terms-modal-header">
 
           <h2 id="terms-title">
-            Terms of service
+            {termsData.title}
           </h2>
 
           <button
@@ -65,7 +65,30 @@ const TermsModal = ({ isOpen, onClose }) => {
         <div className="terms-modal-content">
 
           <div className="terms-document">
-            {termsData}
+
+            {termsData.sections.map((section, index) => (
+
+              <section
+                className="terms-section"
+                key={index}
+              >
+
+                {/* SECTION HEADING */}
+                {section.heading && (
+                  <h3>{section.heading}</h3>
+                )}
+
+                {/* PARAGRAPHS */}
+                {section.paragraphs?.map((paragraph, paragraphIndex) => (
+                  <p key={paragraphIndex}>
+                    {paragraph}
+                  </p>
+                ))}
+
+              </section>
+
+            ))}
+
           </div>
 
         </div>
