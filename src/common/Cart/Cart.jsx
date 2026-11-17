@@ -1,5 +1,7 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router";
+
 import {
   IoCartOutline,
   IoAdd,
@@ -14,14 +16,16 @@ import "./Cart.css";
 const FREE_SHIPPING = 25;
 
 const Cart = () => {
+  const navigate = useNavigate();
+
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [discountCode, setDiscountCode] = useState("");
   const [discountMessage, setDiscountMessage] = useState("");
 
-  // CONVERT PRICE TO NUMBER
+  // PRICE CONVERSION
   const getPrice = (price) => {
-    return Number(String(price).replace(/[^0-9.]/g, ""));
+    return Number(String(price).replace(/[^0-9.]/g, "")) || 0;
   };
 
   // ADD PRODUCT
@@ -39,10 +43,7 @@ const Cart = () => {
         );
       }
 
-      return [
-        ...prev,
-        { ...product, quantity: 1 },
-      ];
+      return [...prev, { ...product, quantity: 1 }];
     });
 
     setCartOpen(true);
@@ -79,7 +80,7 @@ const Cart = () => {
     );
   };
 
-  // TOTAL QUANTITY
+  // TOTAL ITEMS
   const totalItems = cartItems.reduce(
     (total, item) => total + item.quantity,
     0
@@ -92,7 +93,7 @@ const Cart = () => {
     0
   );
 
-  // SHIPPING PROGRESS
+  // SHIPPING
   const remainingShipping = Math.max(
     FREE_SHIPPING - subtotal,
     0
@@ -103,7 +104,7 @@ const Cart = () => {
     100
   );
 
-  // DISCOUNT CODE
+  // DISCOUNT
   const applyDiscount = () => {
     if (!discountCode.trim()) {
       setDiscountMessage("Please enter a discount code.");
@@ -112,17 +113,26 @@ const Cart = () => {
     }
   };
 
-  // BEST SELLERS
+  // CONNECT TO CHECKOUT
+  const handleCheckout = () => {
+    if (!cartItems.length) return;
+
+    navigate("/checkout", {
+      state: {
+        cartItems,
+      },
+    });
+
+    setCartOpen(false);
+  };
+
+  // PRODUCTS
   const renderProducts = () => (
     <div className="products-slider">
       {carouselCardsData.map((product) => (
         <div className="product-card" key={product.name}>
-
           <div className="product-image">
-            <img
-              src={product.image}
-              alt={product.name}
-            />
+            <img src={product.image} alt={product.name} />
 
             <button
               className="add-product-btn"
@@ -137,7 +147,6 @@ const Cart = () => {
             <h4>{product.name}</h4>
             <p>{product.price}</p>
           </div>
-
         </div>
       ))}
     </div>
@@ -145,9 +154,7 @@ const Cart = () => {
 
   return (
     <>
-      {/* =========================
-          CART ICON
-      ========================= */}
+      {/* CART ICON */}
 
       <div className="cart-icon-wrapper">
         <IoCartOutline
@@ -162,29 +169,20 @@ const Cart = () => {
         )}
       </div>
 
-      {/* =========================
-          OVERLAY
-      ========================= */}
+      {/* OVERLAY */}
 
       <div
         className={`cart-overlay ${cartOpen ? "active" : ""}`}
         onClick={() => setCartOpen(false)}
       />
 
-      {/* =========================
-          CART SIDEBAR
-      ========================= */}
+      {/* CART SIDEBAR */}
 
-      <div
-        className={`cart-sidebar ${cartOpen ? "active" : ""}`}
-      >
+      <div className={`cart-sidebar ${cartOpen ? "active" : ""}`}>
 
-        {/* =========================
-            EMPTY CART DESIGN
-        ========================= */}
+        {/* EMPTY CART */}
 
         {cartItems.length === 0 ? (
-
           <>
             <button
               className="cart-close-btn"
@@ -208,28 +206,17 @@ const Cart = () => {
               </button>
 
               <section className="best-sellers">
-
                 <h3>SHOP BEST SELLERS</h3>
-
                 {renderProducts()}
-
               </section>
 
             </div>
           </>
-
         ) : (
-
-          /* =========================
-              ADDED PRODUCT DESIGN
-          ========================= */
-
           <>
-
             {/* CART HEADER */}
 
             <div className="cart-header">
-
               <h2>Cart ({totalItems})</h2>
 
               <button
@@ -238,7 +225,6 @@ const Cart = () => {
               >
                 ×
               </button>
-
             </div>
 
             <div className="cart-content added-cart-content">
@@ -264,9 +250,7 @@ const Cart = () => {
 
                 <div className="shipping-progress">
                   <div
-                    style={{
-                      width: `${shippingProgress}%`,
-                    }}
+                    style={{ width: `${shippingProgress}%` }}
                   />
                 </div>
 
@@ -277,29 +261,17 @@ const Cart = () => {
               <div className="cart-items">
 
                 {cartItems.map((item) => (
+                  <div className="cart-item" key={item.name}>
 
-                  <div
-                    className="cart-item"
-                    key={item.name}
-                  >
-
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                    />
+                    <img src={item.image} alt={item.name} />
 
                     <div className="cart-item-info">
-
                       <h3>{item.name}</h3>
-
-                      {/* QUANTITY */}
 
                       <div className="quantity-control">
 
                         <button
-                          onClick={() =>
-                            decreaseQuantity(item.name)
-                          }
+                          onClick={() => decreaseQuantity(item.name)}
                           aria-label="Decrease quantity"
                         >
                           <IoRemove />
@@ -310,19 +282,14 @@ const Cart = () => {
                         </span>
 
                         <button
-                          onClick={() =>
-                            increaseQuantity(item.name)
-                          }
+                          onClick={() => increaseQuantity(item.name)}
                           aria-label="Increase quantity"
                         >
                           <IoAdd />
                         </button>
 
                       </div>
-
                     </div>
-
-                    {/* PRICE AND DELETE */}
 
                     <div className="cart-item-right">
 
@@ -335,45 +302,34 @@ const Cart = () => {
                       </button>
 
                       <p>
-                        $
-                        {(
-                          getPrice(item.price) * item.quantity
-                        ).toFixed(2)}
+                        ${(getPrice(item.price) * item.quantity).toFixed(2)}
                       </p>
 
                     </div>
 
                   </div>
-
                 ))}
 
               </div>
 
-              {/* YOU MAY ALSO LIKE */}
+              {/* RECOMMENDED PRODUCTS */}
 
               <section className="recommended-section">
-
                 <h3>YOU MAY ALSO LIKE</h3>
-
                 {renderProducts()}
-
               </section>
 
               {/* CART BOTTOM */}
 
               <div className="cart-bottom">
 
-                {/* SHIPPING PROGRESS */}
-
                 <div className="bottom-progress">
                   <div
-                    style={{
-                      width: `${shippingProgress}%`,
-                    }}
+                    style={{ width: `${shippingProgress}%` }}
                   />
                 </div>
 
-                {/* DISCOUNT CODE */}
+                {/* DISCOUNT */}
 
                 <div className="discount-section">
 
@@ -402,16 +358,11 @@ const Cart = () => {
                 {/* SUBTOTAL */}
 
                 <div className="subtotal-section">
-
                   <h3>SUBTOTAL</h3>
-
-                  <p>
-                    ${subtotal.toFixed(2)}
-                  </p>
-
+                  <p>${subtotal.toFixed(2)}</p>
                 </div>
 
-                {/* ACTION BUTTONS */}
+                {/* ACTIONS */}
 
                 <div className="cart-actions">
 
@@ -426,9 +377,7 @@ const Cart = () => {
 
                   <button
                     className="checkout-btn"
-                    onClick={() =>
-                      alert("Proceeding to checkout!")
-                    }
+                    onClick={handleCheckout}
                   >
                     Checkout
                   </button>
@@ -438,9 +387,7 @@ const Cart = () => {
               </div>
 
             </div>
-
           </>
-
         )}
 
       </div>

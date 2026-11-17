@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
-import Logo from "../Logo/Logo";
+import Logo from "../../common/Logo/Logo";
 
 import "./CheckoutContent.css";
 
