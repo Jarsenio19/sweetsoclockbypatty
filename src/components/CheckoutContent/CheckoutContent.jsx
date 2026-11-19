@@ -37,7 +37,9 @@ const CheckoutContent = () => {
   const [sameBilling, setSameBilling] = useState(true);
 
   // MULTIPLE SHIPPING ADDRESSES
-  const [multipleAddresses, setMultipleAddresses] = useState(false);
+  const [multipleAddresses, setMultipleAddresses] = useState(
+    location.state?.multipleAddresses ?? false
+  );
 
   const [productAddresses, setProductAddresses] = useState({});
   const [additionalAddresses, setAdditionalAddresses] = useState([]);
@@ -72,7 +74,7 @@ const CheckoutContent = () => {
 
   // ENABLE / DISABLE MULTIPLE ADDRESSES
   const toggleMultipleAddresses = () => {
-    alert("Multiple address shipping coming soon!");
+    setMultipleAddresses((prev) => !prev);
   };
 
   // ASSIGN ADDRESS TO PRODUCT
@@ -232,34 +234,33 @@ const CheckoutContent = () => {
 
     if (multipleAddresses) {
       const unassignedProducts = cartItems.filter(
-        (_, index) => !productAddresses[index]
+        (_, index) => {
+          const addressId = productAddresses[index] || "main";
+
+          if (addressId === "main") {
+            return !shippingAddress.address ||
+              !shippingAddress.city ||
+              !shippingAddress.zip;
+          }
+
+          const address = additionalAddresses.find(
+            (item) => item.id === addressId
+          );
+
+          return !address ||
+            !address.address ||
+            !address.city ||
+            !address.zip;
+        }
       );
 
       if (unassignedProducts.length > 0) {
-        alert("Please assign a shipping address to every product.");
+        alert(
+          "Please complete the shipping addresses for all products."
+        );
         return;
       }
-    }
-
-    const orderData = {
-      email,
-      cartItems,
-      multipleAddresses,
-      shippingAddress,
-      productAddresses,
-      additionalAddresses,
-      billingAddress: sameBilling
-        ? shippingAddress
-        : billingAddress,
-      paymentMethod,
-      subtotal,
-      shipping,
-      total,
-    };
-
-    console.log("Checkout order:", orderData);
-
-    alert("Checkout information completed!");
+    } rt("Checkout information completed!");
   };
 
   // EMPTY CART
@@ -360,102 +361,120 @@ const CheckoutContent = () => {
               </label>
             </section>
 
+
             {/* DELIVERY */}
             <section className="checkout-section">
-              <h3>Delivery</h3>
-              <button
-                type="button"
-                className="multiple-address-btn"
-                onClick={toggleMultipleAddresses}
-              >
-                {multipleAddresses
-                  ? "Ship to one address"
-                  : "Ship to multiple addresses"}
-              </button>
+              <h3>Shipping</h3>
 
               {!multipleAddresses ? (
-                renderAddressFields(
-                  shippingAddress,
-                  updateShipping,
-                  true
-                )
+                <>
+                  {cartItems.map((item, index) => (
+                    <div className="shipping-product-card" key={`${item.name}-${index}`}>
+                      <img src={item.image} alt={item.name} />
+
+                      <div>
+                        <strong>{item.name}</strong>
+                        <small>Quantity: {item.quantity}</small>
+                      </div>
+                    </div>
+                  ))}
+
+                  {renderAddressFields(
+                    shippingAddress,
+                    updateShipping,
+                    true
+                  )}
+
+                  <button
+                    type="button"
+                    className="add-address-btn"
+                    onClick={() => setMultipleAddresses(true)}
+                  >
+                    + Add shipping address
+                  </button>
+                </>
               ) : (
                 <div className="multiple-address-container">
 
                   <p className="multiple-address-description">
-                    Choose a shipping address for each product.
+                    Add shipping addresses and select where each product
+                    should be delivered.
                   </p>
 
-                  {cartItems.map((item, index) => (
+                  {/* PRIMARY SHIPPING ADDRESS */}
+                  <div className="additional-address-card">
+                    <h4>Primary shipping address</h4>
+
+                    {renderAddressFields(
+                      shippingAddress,
+                      updateShipping,
+                      true
+                    )}
+                  </div>
+
+                  {/* ADDITIONAL ADDRESSES */}
+                  {additionalAddresses.map((address, index) => (
                     <div
-                      className="multiple-address-product"
-                      key={`${item.name}-${index}`}
+                      className="additional-address-card"
+                      key={address.id}
                     >
-                      <div className="multiple-address-product-info">
-                        <strong>{item.name}</strong>
-                        <span>Quantity: {item.quantity}</span>
-                      </div>
+                      <h4>Shipping address {index + 2}</h4>
 
-                      <select
-                        value={productAddresses[index] || "main"}
-                        onChange={(e) =>
-                          assignProductAddress(index, e.target.value)
-                        }
-                      >
-                        <option value="main">
-                          Primary shipping address
-                        </option>
-
-                        {additionalAddresses.map((address, addressIndex) => (
-                          <option
-                            key={address.id}
-                            value={address.id}
-                          >
-                            Additional address {addressIndex + 1}
-                          </option>
-                        ))}
-                      </select>
+                      {renderAddressFields(
+                        address,
+                        (e) => updateAdditionalAddress(address.id, e),
+                        true
+                      )}
                     </div>
                   ))}
-
-                  <div className="additional-address-list">
-
-                    {additionalAddresses.map((address, index) => (
-                      <div
-                        className="additional-address-card"
-                        key={address.id}
-                      >
-                        <h4>Additional address {index + 1}</h4>
-
-                        {renderAddressFields(
-                          address,
-                          (e) => updateAdditionalAddress(address.id, e),
-                          true
-                        )}
-                      </div>
-                    ))}
-
-                  </div>
 
                   <button
                     type="button"
                     className="add-address-btn"
                     onClick={addShippingAddress}
                   >
-                    + Add another address
+                    + Add shipping address
                   </button>
+
+                  {/* ASSIGN PRODUCTS */}
+                  <div className="product-address-assignments">
+                    <h4>Assign products to addresses</h4>
+
+                    {cartItems.map((item, index) => (
+                      <div
+                        className="multiple-address-product"
+                        key={`${item.name}-${index}`}
+                      >
+                        <div className="multiple-address-product-info">
+                          <strong>{item.name}</strong>
+                          <span>Quantity: {item.quantity}</span>
+                        </div>
+
+                        <select
+                          value={productAddresses[index] || "main"}
+                          onChange={(e) =>
+                            assignProductAddress(index, e.target.value)
+                          }
+                        >
+                          <option value="main">
+                            Primary shipping address
+                          </option>
+
+                          {additionalAddresses.map((address, addressIndex) => (
+                            <option
+                              key={address.id}
+                              value={address.id}
+                            >
+                              Shipping address {addressIndex + 2}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    ))}
+                  </div>
 
                 </div>
               )}
-
-              <div className="shipping-method">
-                <h4>Shipping method</h4>
-
-                <p>
-                  Enter your shipping address to view available
-                  shipping methods.
-                </p>
-              </div>
             </section>
 
             {/* PAYMENT */}
