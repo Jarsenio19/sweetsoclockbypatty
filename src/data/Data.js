@@ -305,3 +305,67 @@ export const basketOptions = [
   "Brownies",
   "Assorted Treats",
 ];
+
+
+
+// ===============================
+// CHECKOUT DATA
+// ===============================
+
+export const checkoutData = {
+  // COUNTRIES
+  countries: [
+    "United States",
+    "Philippines",
+    "Canada",
+    "United Kingdom",
+    "Australia",
+  ],
+
+  // PAYMENT METHODS
+  paymentMethods: [
+    {
+      id: "card",
+      name: "Credit card",
+    },
+    {
+      id: "shop",
+      name: "Shop Pay",
+    },
+    {
+      id: "paypal",
+      name: "PayPal",
+    },
+    {
+      id: "google",
+      name: "Google Pay",
+    },
+  ],
+
+  // SHIPPING
+  shipping: {
+    price: 0,
+    label: "Free",
+  },
+
+  // POLICIES
+  policies: [
+    "Refund policy",
+    "Shipping policy",
+    "Privacy policy",
+    "Terms of service",
+  ],
+
+  // DEFAULT ADDRESS
+  defaultAddress: {
+    country: "United States",
+    firstName: "",
+    lastName: "",
+    address: "",
+    apartment: "",
+    city: "",
+    state: "",
+    zip: "",
+    phone: "",
+  },
+};

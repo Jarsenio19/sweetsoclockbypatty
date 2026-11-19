@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import Logo from "../../common/Logo/Logo";
+import { checkoutData } from "../../data/Data";
 
 import "./CheckoutContent.css";
 
@@ -25,7 +26,7 @@ const CheckoutContent = () => {
     0
   );
 
-  const shipping = 0;
+  const shipping = checkoutData.shipping.price;
   const total = subtotal + shipping;
 
   // FORM STATES
@@ -35,27 +36,18 @@ const CheckoutContent = () => {
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [sameBilling, setSameBilling] = useState(true);
 
+  // MULTIPLE SHIPPING ADDRESSES
+  const [multipleAddresses, setMultipleAddresses] = useState(false);
+
+  const [productAddresses, setProductAddresses] = useState({});
+  const [additionalAddresses, setAdditionalAddresses] = useState([]);
+
   const [shippingAddress, setShippingAddress] = useState({
-    country: "United States",
-    firstName: "",
-    lastName: "",
-    address: "",
-    apartment: "",
-    city: "",
-    state: "",
-    zip: "",
-    phone: "",
+    ...checkoutData.defaultAddress,
   });
 
   const [billingAddress, setBillingAddress] = useState({
-    country: "United States",
-    firstName: "",
-    lastName: "",
-    address: "",
-    apartment: "",
-    city: "",
-    state: "",
-    zip: "",
+    ...checkoutData.defaultAddress,
   });
 
   // UPDATE SHIPPING ADDRESS
@@ -77,6 +69,53 @@ const CheckoutContent = () => {
       [name]: value,
     }));
   };
+
+  // ENABLE / DISABLE MULTIPLE ADDRESSES
+  const toggleMultipleAddresses = () => {
+    alert("Multiple address shipping coming soon!");
+  };
+
+  // ASSIGN ADDRESS TO PRODUCT
+  const assignProductAddress = (index, addressId) => {
+    setProductAddresses((prev) => ({
+      ...prev,
+      [index]: addressId,
+    }));
+  };
+
+  // ADD NEW SHIPPING ADDRESS
+  const addShippingAddress = () => {
+    setAdditionalAddresses((prev) => [
+      ...prev,
+      {
+        id: `address-${Date.now()}`,
+        country: "United States",
+        firstName: "",
+        lastName: "",
+        address: "",
+        apartment: "",
+        city: "",
+        state: "",
+        zip: "",
+        phone: "",
+      },
+    ]);
+  };
+
+  // UPDATE ADDITIONAL ADDRESS
+  const updateAdditionalAddress = (id, e) => {
+    const { name, value } = e.target;
+
+    setAdditionalAddresses((prev) =>
+      prev.map((address) =>
+        address.id === id
+          ? { ...address, [name]: value }
+          : address
+      )
+    );
+  };
+
+
 
   // DISCOUNT CODE
   const applyDiscount = () => {
@@ -100,11 +139,11 @@ const CheckoutContent = () => {
         onChange={update}
         required
       >
-        <option value="United States">United States</option>
-        <option value="Philippines">Philippines</option>
-        <option value="Canada">Canada</option>
-        <option value="United Kingdom">United Kingdom</option>
-        <option value="Australia">Australia</option>
+        {checkoutData.countries.map((country) => (
+          <option key={country} value={country}>
+            {country}
+          </option>
+        ))}
       </select>
 
       <div className="checkout-input-row">
@@ -191,9 +230,36 @@ const CheckoutContent = () => {
 
     if (!cartItems.length) return;
 
-    alert(
-      "Checkout form completed. Connect your payment provider to accept payments."
-    );
+    if (multipleAddresses) {
+      const unassignedProducts = cartItems.filter(
+        (_, index) => !productAddresses[index]
+      );
+
+      if (unassignedProducts.length > 0) {
+        alert("Please assign a shipping address to every product.");
+        return;
+      }
+    }
+
+    const orderData = {
+      email,
+      cartItems,
+      multipleAddresses,
+      shippingAddress,
+      productAddresses,
+      additionalAddresses,
+      billingAddress: sameBilling
+        ? shippingAddress
+        : billingAddress,
+      paymentMethod,
+      subtotal,
+      shipping,
+      total,
+    };
+
+    console.log("Checkout order:", orderData);
+
+    alert("Checkout information completed!");
   };
 
   // EMPTY CART
@@ -219,27 +285,21 @@ const CheckoutContent = () => {
     <div className="checkout-container">
 
       {/* LEFT SIDE */}
-
       <main className="checkout-main">
-
         <div className="checkout-form-wrapper">
 
           {/* LOGO */}
-
           <div className="checkout-logo">
             <Logo />
           </div>
 
           {/* EXPRESS CHECKOUT */}
-
           <div className="express-checkout">
-
             <p className="express-title">
               Express checkout
             </p>
 
             <div className="express-buttons">
-
               <button
                 type="button"
                 className="shop-pay"
@@ -263,23 +323,18 @@ const CheckoutContent = () => {
               >
                 G Pay
               </button>
-
             </div>
 
             <div className="checkout-or">
               <span>OR</span>
             </div>
-
           </div>
 
           <form onSubmit={handlePayment}>
 
             {/* CONTACT */}
-
             <section className="checkout-section">
-
               <div className="checkout-section-heading">
-
                 <h3>Contact</h3>
 
                 <button
@@ -289,7 +344,6 @@ const CheckoutContent = () => {
                 >
                   Sign in
                 </button>
-
               </div>
 
               <input
@@ -304,19 +358,94 @@ const CheckoutContent = () => {
                 <input type="checkbox" />
                 <span>Email me news and offers</span>
               </label>
-
             </section>
 
             {/* DELIVERY */}
-
             <section className="checkout-section">
-
               <h3>Delivery</h3>
+              <button
+                type="button"
+                className="multiple-address-btn"
+                onClick={toggleMultipleAddresses}
+              >
+                {multipleAddresses
+                  ? "Ship to one address"
+                  : "Ship to multiple addresses"}
+              </button>
 
-              {renderAddressFields(
-                shippingAddress,
-                updateShipping,
-                true
+              {!multipleAddresses ? (
+                renderAddressFields(
+                  shippingAddress,
+                  updateShipping,
+                  true
+                )
+              ) : (
+                <div className="multiple-address-container">
+
+                  <p className="multiple-address-description">
+                    Choose a shipping address for each product.
+                  </p>
+
+                  {cartItems.map((item, index) => (
+                    <div
+                      className="multiple-address-product"
+                      key={`${item.name}-${index}`}
+                    >
+                      <div className="multiple-address-product-info">
+                        <strong>{item.name}</strong>
+                        <span>Quantity: {item.quantity}</span>
+                      </div>
+
+                      <select
+                        value={productAddresses[index] || "main"}
+                        onChange={(e) =>
+                          assignProductAddress(index, e.target.value)
+                        }
+                      >
+                        <option value="main">
+                          Primary shipping address
+                        </option>
+
+                        {additionalAddresses.map((address, addressIndex) => (
+                          <option
+                            key={address.id}
+                            value={address.id}
+                          >
+                            Additional address {addressIndex + 1}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
+
+                  <div className="additional-address-list">
+
+                    {additionalAddresses.map((address, index) => (
+                      <div
+                        className="additional-address-card"
+                        key={address.id}
+                      >
+                        <h4>Additional address {index + 1}</h4>
+
+                        {renderAddressFields(
+                          address,
+                          (e) => updateAdditionalAddress(address.id, e),
+                          true
+                        )}
+                      </div>
+                    ))}
+
+                  </div>
+
+                  <button
+                    type="button"
+                    className="add-address-btn"
+                    onClick={addShippingAddress}
+                  >
+                    + Add another address
+                  </button>
+
+                </div>
               )}
 
               <div className="shipping-method">
@@ -327,13 +456,10 @@ const CheckoutContent = () => {
                   shipping methods.
                 </p>
               </div>
-
             </section>
 
             {/* PAYMENT */}
-
             <section className="checkout-section">
-
               <h3>Payment</h3>
 
               <p className="checkout-subtitle">
@@ -342,15 +468,12 @@ const CheckoutContent = () => {
 
               <div className="payment-options">
 
-                {/* CARD */}
-
+                {/* CREDIT CARD */}
                 <div
                   className={`payment-option ${paymentMethod === "card" ? "selected" : ""
                     }`}
                 >
-
                   <label className="payment-option-heading">
-
                     <input
                       type="radio"
                       name="payment"
@@ -365,13 +488,10 @@ const CheckoutContent = () => {
                       <span>MC</span>
                       <span>AMEX</span>
                     </div>
-
                   </label>
 
                   {paymentMethod === "card" && (
-
                     <div className="card-fields">
-
                       <input
                         type="text"
                         placeholder="Card number"
@@ -380,7 +500,6 @@ const CheckoutContent = () => {
                       />
 
                       <div className="checkout-input-row">
-
                         <input
                           type="text"
                           placeholder="Expiration date (MM / YY)"
@@ -394,7 +513,6 @@ const CheckoutContent = () => {
                           autoComplete="cc-csc"
                           required
                         />
-
                       </div>
 
                       <input
@@ -403,19 +521,13 @@ const CheckoutContent = () => {
                         autoComplete="cc-name"
                         required
                       />
-
                     </div>
-
                   )}
-
                 </div>
 
                 {/* SHOP PAY */}
-
                 <label className="payment-option">
-
                   <div className="payment-option-heading">
-
                     <input
                       type="radio"
                       name="payment"
@@ -424,19 +536,13 @@ const CheckoutContent = () => {
                     />
 
                     <span>Shop Pay</span>
-
                     <small>shop</small>
-
                   </div>
-
                 </label>
 
                 {/* PAYPAL */}
-
                 <label className="payment-option">
-
                   <div className="payment-option-heading">
-
                     <input
                       type="radio"
                       name="payment"
@@ -445,19 +551,13 @@ const CheckoutContent = () => {
                     />
 
                     <span>PayPal</span>
-
                     <small>PayPal</small>
-
                   </div>
-
                 </label>
 
                 {/* GOOGLE PAY */}
-
                 <label className="payment-option">
-
                   <div className="payment-option-heading">
-
                     <input
                       type="radio"
                       name="payment"
@@ -466,23 +566,17 @@ const CheckoutContent = () => {
                     />
 
                     <span>Google Pay</span>
-
                     <small>G Pay</small>
-
                   </div>
-
                 </label>
 
               </div>
 
               {/* BILLING ADDRESS */}
-
               <div className="billing-section">
-
                 <h3>Billing address</h3>
 
                 <label className="billing-choice">
-
                   <input
                     type="radio"
                     name="billing"
@@ -491,11 +585,9 @@ const CheckoutContent = () => {
                   />
 
                   <span>Same as shipping address</span>
-
                 </label>
 
                 <label className="billing-choice">
-
                   <input
                     type="radio"
                     name="billing"
@@ -504,26 +596,24 @@ const CheckoutContent = () => {
                   />
 
                   <span>Use a different billing address</span>
-
                 </label>
 
                 {!sameBilling && (
                   <div className="billing-fields">
-
                     {renderAddressFields(
                       billingAddress,
                       updateBilling
                     )}
-
                   </div>
                 )}
-
               </div>
+
 
             </section>
 
-            {/* PAY NOW */}
 
+
+            {/* PAY NOW */}
             <button
               type="submit"
               className="checkout-pay-btn"
@@ -534,46 +624,38 @@ const CheckoutContent = () => {
           </form>
 
           {/* FOOTER */}
-
           <footer className="checkout-footer">
-
-            <a href="#refund">Refund policy</a>
-            <a href="#shipping">Shipping policy</a>
-            <a href="#privacy">Privacy policy</a>
-            <a href="#terms">Terms of service</a>
-
+            {checkoutData.policies.map((policy) => (
+              <a
+                key={policy}
+                href={`#${policy.toLowerCase().replaceAll(" ", "-")}`}
+              >
+                {policy}
+              </a>
+            ))}
           </footer>
 
         </div>
-
       </main>
 
       {/* RIGHT SIDE - ORDER SUMMARY */}
-
       <aside className="checkout-summary">
-
         <div className="checkout-summary-inner">
 
           {/* PRODUCTS */}
-
           <div className="checkout-products">
-
-            {cartItems.map((item) => (
-
+            {cartItems.map((item, index) => (
               <div
                 className="checkout-product"
-                key={item.name}
+                key={`${item.name}-${index}`}
               >
-
                 <div className="checkout-product-image">
-
                   <img
                     src={item.image}
                     alt={item.name}
                   />
 
                   <span>{item.quantity}</span>
-
                 </div>
 
                 <div className="checkout-product-info">
@@ -586,17 +668,12 @@ const CheckoutContent = () => {
                     getPrice(item.price) * item.quantity
                   ).toFixed(2)}
                 </p>
-
               </div>
-
             ))}
-
           </div>
 
           {/* DISCOUNT */}
-
           <div className="checkout-discount">
-
             <input
               type="text"
               placeholder="Discount code or gift card"
@@ -613,7 +690,6 @@ const CheckoutContent = () => {
             >
               Apply
             </button>
-
           </div>
 
           {discountMessage && (
@@ -623,9 +699,7 @@ const CheckoutContent = () => {
           )}
 
           {/* TOTALS */}
-
           <div className="checkout-totals">
-
             <div>
               <span>Subtotal</span>
               <span>${subtotal.toFixed(2)}</span>
@@ -633,24 +707,20 @@ const CheckoutContent = () => {
 
             <div>
               <span>Shipping</span>
-              <span>Free</span>
+              <span>{checkoutData.shipping.label}</span>
             </div>
 
             <div className="checkout-total">
-
               <span>Total</span>
 
               <div>
                 <small>USD</small>
                 <strong>${total.toFixed(2)}</strong>
               </div>
-
             </div>
-
           </div>
 
         </div>
-
       </aside>
 
     </div>

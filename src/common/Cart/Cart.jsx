@@ -368,9 +368,16 @@ const Cart = () => {
 
                   <button
                     className="multiple-address-btn"
-                    onClick={() =>
-                      alert("Multiple address shipping coming soon!")
-                    }
+                    onClick={() => {
+                      navigate("/checkout", {
+                        state: {
+                          cartItems,
+                          multipleAddresses: true,
+                        },
+                      });
+
+                      setCartOpen(false);
+                    }}
                   >
                     Ship to Multiple Addresses
                   </button>
