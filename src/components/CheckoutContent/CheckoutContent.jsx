@@ -34,7 +34,8 @@ const CheckoutContent = () => {
   const [discountCode, setDiscountCode] = useState("");
   const [discountMessage, setDiscountMessage] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("card");
-  const [sameBilling, setSameBilling] = useState(true);
+  const [sameBilling, setSameBilling] = useState(false);
+  const [emailOffers, setEmailOffers] = useState(false);
 
   // MULTIPLE SHIPPING ADDRESSES
   const [multipleAddresses, setMultipleAddresses] = useState(
@@ -102,6 +103,23 @@ const CheckoutContent = () => {
         phone: "",
       },
     ]);
+  };
+
+  // REMOVE ADDITIONAL SHIPPING ADDRESS
+  const removeShippingAddress = (id) => {
+    setAdditionalAddresses((prev) =>
+      prev.filter((address) => address.id !== id)
+    );
+
+    setProductAddresses((prev) => {
+      const updated = {};
+
+      Object.entries(prev).forEach(([index, addressId]) => {
+        updated[index] = addressId === id ? "main" : addressId;
+      });
+
+      return updated;
+    });
   };
 
   // UPDATE ADDITIONAL ADDRESS
@@ -238,29 +256,45 @@ const CheckoutContent = () => {
           const addressId = productAddresses[index] || "main";
 
           if (addressId === "main") {
-            return !shippingAddress.address ||
+            return (
+              !shippingAddress.address ||
               !shippingAddress.city ||
-              !shippingAddress.zip;
+              !shippingAddress.zip
+            );
           }
 
           const address = additionalAddresses.find(
             (item) => item.id === addressId
           );
 
-          return !address ||
+          return (
+            !address ||
             !address.address ||
             !address.city ||
-            !address.zip;
+            !address.zip
+          );
         }
       );
 
       if (unassignedProducts.length > 0) {
-        alert(
-          "Please complete the shipping addresses for all products."
-        );
+        alert("Please complete the shipping addresses for all products.");
         return;
       }
-    } rt("Checkout information completed!");
+    }
+
+    if (
+      !sameBilling &&
+      (
+        !billingAddress.address ||
+        !billingAddress.city ||
+        !billingAddress.zip
+      )
+    ) {
+      alert("Please complete your billing address.");
+      return;
+    }
+
+    alert("Checkout information completed!");
   };
 
   // EMPTY CART
@@ -355,8 +389,13 @@ const CheckoutContent = () => {
                 required
               />
 
+
               <label className="checkout-checkbox">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={emailOffers}
+                  onChange={(e) => setEmailOffers(e.target.checked)}
+                />
                 <span>Email me news and offers</span>
               </label>
             </section>
@@ -364,25 +403,14 @@ const CheckoutContent = () => {
 
             {/* DELIVERY */}
             <section className="checkout-section">
-              <h3>Shipping</h3>
+
+              <h3>Delivery</h3>
 
               {!multipleAddresses ? (
                 <>
-                  {cartItems.map((item, index) => (
-                    <div className="shipping-product-card" key={`${item.name}-${index}`}>
-                      <img src={item.image} alt={item.name} />
-
-                      <div>
-                        <strong>{item.name}</strong>
-                        <small>Quantity: {item.quantity}</small>
-                      </div>
-                    </div>
-                  ))}
-
                   {renderAddressFields(
                     shippingAddress,
-                    updateShipping,
-                    true
+                    updateShipping
                   )}
 
                   <button
@@ -390,7 +418,7 @@ const CheckoutContent = () => {
                     className="add-address-btn"
                     onClick={() => setMultipleAddresses(true)}
                   >
-                    + Add shipping address
+                    Want to ship to more than one address?
                   </button>
                 </>
               ) : (
@@ -401,15 +429,16 @@ const CheckoutContent = () => {
                     should be delivered.
                   </p>
 
-                  {/* PRIMARY SHIPPING ADDRESS */}
+                  {/* PRIMARY ADDRESS */}
                   <div className="additional-address-card">
+
                     <h4>Primary shipping address</h4>
 
                     {renderAddressFields(
                       shippingAddress,
-                      updateShipping,
-                      true
+                      updateShipping
                     )}
+
                   </div>
 
                   {/* ADDITIONAL ADDRESSES */}
@@ -418,13 +447,25 @@ const CheckoutContent = () => {
                       className="additional-address-card"
                       key={address.id}
                     >
-                      <h4>Shipping address {index + 2}</h4>
+
+                      <div className="address-card-heading">
+
+                        <h4>Shipping address {index + 2}</h4>
+
+                        <button
+                          type="button"
+                          onClick={() => removeShippingAddress(address.id)}
+                        >
+                          Remove
+                        </button>
+
+                      </div>
 
                       {renderAddressFields(
                         address,
-                        (e) => updateAdditionalAddress(address.id, e),
-                        true
+                        (e) => updateAdditionalAddress(address.id, e)
                       )}
+
                     </div>
                   ))}
 
@@ -438,6 +479,7 @@ const CheckoutContent = () => {
 
                   {/* ASSIGN PRODUCTS */}
                   <div className="product-address-assignments">
+
                     <h4>Assign products to addresses</h4>
 
                     {cartItems.map((item, index) => (
@@ -445,6 +487,7 @@ const CheckoutContent = () => {
                         className="multiple-address-product"
                         key={`${item.name}-${index}`}
                       >
+
                         <div className="multiple-address-product-info">
                           <strong>{item.name}</strong>
                           <span>Quantity: {item.quantity}</span>
@@ -456,6 +499,7 @@ const CheckoutContent = () => {
                             assignProductAddress(index, e.target.value)
                           }
                         >
+
                           <option value="main">
                             Primary shipping address
                           </option>
@@ -468,13 +512,37 @@ const CheckoutContent = () => {
                               Shipping address {addressIndex + 2}
                             </option>
                           ))}
+
                         </select>
+
                       </div>
                     ))}
+
                   </div>
+
+                  <button
+                    type="button"
+                    className="add-address-btn"
+                    onClick={() => setMultipleAddresses(false)}
+                  >
+                    Use one shipping address instead
+                  </button>
 
                 </div>
               )}
+
+              {/* SHIPPING METHOD */}
+              <div className="shipping-method">
+
+                <h4>Shipping method</h4>
+
+                <p>
+                  Enter your shipping address to view available
+                  shipping methods.
+                </p>
+
+              </div>
+
             </section>
 
             {/* PAYMENT */}
@@ -486,6 +554,7 @@ const CheckoutContent = () => {
               </p>
 
               <div className="payment-options">
+
 
                 {/* CREDIT CARD */}
                 <div
@@ -503,14 +572,16 @@ const CheckoutContent = () => {
                     <span>Credit card</span>
 
                     <div className="card-brands">
-                      <span>VISA</span>
-                      <span>MC</span>
-                      <span>AMEX</span>
+                      <span className="visa">VISA</span>
+                      <span className="mastercard">●●</span>
+                      <span className="amex">AMEX</span>
+                      <span className="more-cards">+5</span>
                     </div>
                   </label>
 
                   {paymentMethod === "card" && (
                     <div className="card-fields">
+
                       <input
                         type="text"
                         placeholder="Card number"
@@ -540,6 +611,28 @@ const CheckoutContent = () => {
                         autoComplete="cc-name"
                         required
                       />
+
+                      {/* BILLING ADDRESS */}
+                      <label className="same-billing-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={sameBilling}
+                          onChange={(e) => setSameBilling(e.target.checked)}
+                        />
+
+                        <span>Use shipping address as billing address</span>
+                      </label>
+
+                      {!sameBilling && (
+                        <div className="billing-fields">
+                          <h4>Billing address</h4>
+
+                          {renderAddressFields(
+                            billingAddress,
+                            updateBilling
+                          )}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
