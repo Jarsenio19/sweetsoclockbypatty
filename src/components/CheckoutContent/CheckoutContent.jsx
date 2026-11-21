@@ -6,6 +6,7 @@ import Logo from "../../common/Logo/Logo";
 import { checkoutData } from "../../data/Data";
 
 import "./CheckoutContent.css";
+import AddressFields from "./AddressFields";
 
 const CheckoutContent = () => {
   const location = useLocation();
@@ -146,103 +147,11 @@ const CheckoutContent = () => {
     }
   };
 
-  // ADDRESS FIELDS
-  const renderAddressFields = (
-    address,
-    update,
-    showPhone = false
-  ) => (
-    <>
-      <select
-        name="country"
-        value={address.country}
-        onChange={update}
-        required
-      >
-        {checkoutData.countries.map((country) => (
-          <option key={country} value={country}>
-            {country}
-          </option>
-        ))}
-      </select>
-
-      <div className="checkout-input-row">
-        <input
-          type="text"
-          name="firstName"
-          placeholder="First name"
-          value={address.firstName}
-          onChange={update}
-          required
-        />
-
-        <input
-          type="text"
-          name="lastName"
-          placeholder="Last name"
-          value={address.lastName}
-          onChange={update}
-          required
-        />
-      </div>
-
-      <input
-        type="text"
-        name="address"
-        placeholder="Address"
-        value={address.address}
-        onChange={update}
-        required
-      />
-
-      <input
-        type="text"
-        name="apartment"
-        placeholder="Apartment, suite, etc. (optional)"
-        value={address.apartment}
-        onChange={update}
-      />
-
-      <div className="checkout-input-row checkout-location-row">
-        <input
-          type="text"
-          name="city"
-          placeholder="City"
-          value={address.city}
-          onChange={update}
-          required
-        />
-
-        <input
-          type="text"
-          name="state"
-          placeholder="State"
-          value={address.state}
-          onChange={update}
-          required
-        />
-
-        <input
-          type="text"
-          name="zip"
-          placeholder="ZIP code"
-          value={address.zip}
-          onChange={update}
-          required
-        />
-      </div>
-
-      {showPhone && (
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Phone (optional)"
-          value={address.phone}
-          onChange={update}
-        />
-      )}
-    </>
-  );
+  <AddressFields
+    address={shippingAddress}
+    onChange={updateShipping}
+    countries={checkoutData.countries}
+  />
 
   // PAYMENT SUBMISSION
   const handlePayment = (e) => {
@@ -408,10 +317,7 @@ const CheckoutContent = () => {
 
               {!multipleAddresses ? (
                 <>
-                  {renderAddressFields(
-                    shippingAddress,
-                    updateShipping
-                  )}
+
 
                   <button
                     type="button"
@@ -434,10 +340,10 @@ const CheckoutContent = () => {
 
                     <h4>Primary shipping address</h4>
 
-                    {renderAddressFields(
+                    {/* {renderAddressFields(
                       shippingAddress,
                       updateShipping
-                    )}
+                    )} */}
 
                   </div>
 
@@ -461,10 +367,7 @@ const CheckoutContent = () => {
 
                       </div>
 
-                      {renderAddressFields(
-                        address,
-                        (e) => updateAdditionalAddress(address.id, e)
-                      )}
+
 
                     </div>
                   ))}
@@ -627,10 +530,7 @@ const CheckoutContent = () => {
                         <div className="billing-fields">
                           <h4>Billing address</h4>
 
-                          {renderAddressFields(
-                            billingAddress,
-                            updateBilling
-                          )}
+
                         </div>
                       )}
                     </div>
@@ -712,10 +612,7 @@ const CheckoutContent = () => {
 
                 {!sameBilling && (
                   <div className="billing-fields">
-                    {renderAddressFields(
-                      billingAddress,
-                      updateBilling
-                    )}
+
                   </div>
                 )}
               </div>
