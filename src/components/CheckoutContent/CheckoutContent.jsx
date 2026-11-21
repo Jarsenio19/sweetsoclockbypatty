@@ -124,18 +124,33 @@ const CheckoutContent = () => {
   };
 
   // UPDATE ADDITIONAL ADDRESS
-  const updateAdditionalAddress = (id, e) => {
-    const { name, value } = e.target;
+  {
+    additionalAddresses.map((address, index) => (
+      <div
+        className="additional-address-card"
+        key={address.id}
+      >
+        <div className="address-card-heading">
+          <h4>Shipping address {index + 2}</h4>
 
-    setAdditionalAddresses((prev) =>
-      prev.map((address) =>
-        address.id === id
-          ? { ...address, [name]: value }
-          : address
-      )
-    );
-  };
+          <button
+            type="button"
+            onClick={() => removeShippingAddress(address.id)}
+          >
+            Remove
+          </button>
+        </div>
 
+        {/* ADDRESS FIELDS */}
+        <AddressFields
+          address={address}
+          onChange={(e) => updateAdditionalAddress(address.id, e)}
+          countries={checkoutData.countries}
+        />
+
+      </div>
+    ))
+  }
 
 
   // DISCOUNT CODE
@@ -147,11 +162,7 @@ const CheckoutContent = () => {
     }
   };
 
-  <AddressFields
-    address={shippingAddress}
-    onChange={updateShipping}
-    countries={checkoutData.countries}
-  />
+
 
   // PAYMENT SUBMISSION
   const handlePayment = (e) => {
@@ -317,7 +328,11 @@ const CheckoutContent = () => {
 
               {!multipleAddresses ? (
                 <>
-
+                  <AddressFields
+                    address={shippingAddress}
+                    onChange={updateShipping}
+                    countries={checkoutData.countries}
+                  />
 
                   <button
                     type="button"
@@ -337,14 +352,13 @@ const CheckoutContent = () => {
 
                   {/* PRIMARY ADDRESS */}
                   <div className="additional-address-card">
-
                     <h4>Primary shipping address</h4>
 
-                    {/* {renderAddressFields(
-                      shippingAddress,
-                      updateShipping
-                    )} */}
-
+                    <AddressFields
+                      address={shippingAddress}
+                      onChange={updateShipping}
+                      countries={checkoutData.countries}
+                    />
                   </div>
 
                   {/* ADDITIONAL ADDRESSES */}
@@ -528,9 +542,11 @@ const CheckoutContent = () => {
 
                       {!sameBilling && (
                         <div className="billing-fields">
-                          <h4>Billing address</h4>
-
-
+                          <AddressFields
+                            address={billingAddress}
+                            onChange={updateBilling}
+                            countries={checkoutData.countries}
+                          />
                         </div>
                       )}
                     </div>
@@ -544,7 +560,10 @@ const CheckoutContent = () => {
                       type="radio"
                       name="payment"
                       checked={paymentMethod === "shop"}
-                      onChange={() => setPaymentMethod("shop")}
+                      onChange={() => {
+                        setPaymentMethod("shop");
+                        setSameBilling(false);
+                      }}
                     />
 
                     <span>Shop Pay</span>
