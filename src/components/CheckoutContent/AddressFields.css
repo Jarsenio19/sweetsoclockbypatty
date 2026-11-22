@@ -1,38 +1,36 @@
-/* =========================================
-   ADDRESS FIELDS
-========================================= */
+.checkout-address-fields {
+  width: 100%;
+}
 
 .checkout-address-fields input,
 .checkout-address-fields select {
   width: 100%;
   min-width: 0;
-  height: 45px;
-  padding: 0 12px;
-  margin-bottom: 10px;
+  height: 42px;
+  padding: 0 11px;
+  margin-bottom: 8px;
   border: 1px solid #dedede;
-  border-radius: 11px;
+  border-radius: 9px;
   background: #fff;
   color: #303030;
   font-family: var(--ff-body);
   font-size: var(--fs-300);
   outline: none;
-  transition: border-color 0.2s ease;
+  transition: border-color .2s ease;
 }
 
 .checkout-address-fields input:focus,
 .checkout-address-fields select:focus {
-  border-color: #087443;
+  border-color: var(--clr-primary-400);
 }
 
 .checkout-address-fields input::placeholder {
-  color: #858585;
+  color: #888;
 }
-
-/* INPUT ROWS */
 
 .checkout-address-fields .checkout-input-row {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .checkout-address-fields .checkout-input-row>* {
@@ -43,10 +41,8 @@
 .checkout-address-fields .checkout-location-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
 }
-
-/* RESPONSIVE */
 
 @media (max-width: 480px) {
   .checkout-address-fields .checkout-location-row {

@@ -7,6 +7,8 @@ import { checkoutData } from "../../data/Data";
 
 import "./CheckoutContent.css";
 import AddressFields from "./AddressFields";
+import GiftMessage from "./GiftMessage";
+import OrderSummary from "./OrderSummary";
 
 const CheckoutContent = () => {
   const location = useLocation();
@@ -37,6 +39,11 @@ const CheckoutContent = () => {
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [sameBilling, setSameBilling] = useState(false);
   const [emailOffers, setEmailOffers] = useState(false);
+
+
+  // GIFT MESSAGE STATES
+  const [giftMessageEnabled, setGiftMessageEnabled] = useState(false);
+  const [giftMessage, setGiftMessage] = useState("");
 
   // MULTIPLE SHIPPING ADDRESSES
   const [multipleAddresses, setMultipleAddresses] = useState(
@@ -72,6 +79,19 @@ const CheckoutContent = () => {
       ...prev,
       [name]: value,
     }));
+  };
+
+  // UPDATE ADDITIONAL SHIPPING ADDRESS
+  const updateAdditionalAddress = (id, e) => {
+    const { name, value } = e.target;
+
+    setAdditionalAddresses((prev) =>
+      prev.map((address) =>
+        address.id === id
+          ? { ...address, [name]: value }
+          : address
+      )
+    );
   };
 
   // ENABLE / DISABLE MULTIPLE ADDRESSES
@@ -123,7 +143,7 @@ const CheckoutContent = () => {
     });
   };
 
-  // UPDATE ADDITIONAL ADDRESS
+  {/* ADDITIONAL ADDRESSES */ }
   {
     additionalAddresses.map((address, index) => (
       <div
@@ -141,13 +161,13 @@ const CheckoutContent = () => {
           </button>
         </div>
 
-        {/* ADDRESS FIELDS */}
         <AddressFields
           address={address}
-          onChange={(e) => updateAdditionalAddress(address.id, e)}
+          onChange={(e) =>
+            updateAdditionalAddress(address.id, e)
+          }
           countries={checkoutData.countries}
         />
-
       </div>
     ))
   }
@@ -320,6 +340,13 @@ const CheckoutContent = () => {
               </label>
             </section>
 
+            {/* GIFT MESSAGE */}
+            <GiftMessage
+              giftMessageEnabled={giftMessageEnabled}
+              setGiftMessageEnabled={setGiftMessageEnabled}
+              giftMessage={giftMessage}
+              setGiftMessage={setGiftMessage}
+            />
 
             {/* DELIVERY */}
             <section className="checkout-section">
@@ -603,43 +630,7 @@ const CheckoutContent = () => {
 
               </div>
 
-              {/* BILLING ADDRESS */}
-              <div className="billing-section">
-                <h3>Billing address</h3>
-
-                <label className="billing-choice">
-                  <input
-                    type="radio"
-                    name="billing"
-                    checked={sameBilling}
-                    onChange={() => setSameBilling(true)}
-                  />
-
-                  <span>Same as shipping address</span>
-                </label>
-
-                <label className="billing-choice">
-                  <input
-                    type="radio"
-                    name="billing"
-                    checked={!sameBilling}
-                    onChange={() => setSameBilling(false)}
-                  />
-
-                  <span>Use a different billing address</span>
-                </label>
-
-                {!sameBilling && (
-                  <div className="billing-fields">
-
-                  </div>
-                )}
-              </div>
-
-
             </section>
-
-
 
             {/* PAY NOW */}
             <button
@@ -667,90 +658,17 @@ const CheckoutContent = () => {
       </main>
 
       {/* RIGHT SIDE - ORDER SUMMARY */}
-      <aside className="checkout-summary">
-        <div className="checkout-summary-inner">
-
-          {/* PRODUCTS */}
-          <div className="checkout-products">
-            {cartItems.map((item, index) => (
-              <div
-                className="checkout-product"
-                key={`${item.name}-${index}`}
-              >
-                <div className="checkout-product-image">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                  />
-
-                  <span>{item.quantity}</span>
-                </div>
-
-                <div className="checkout-product-info">
-                  <h4>{item.name}</h4>
-                </div>
-
-                <p>
-                  $
-                  {(
-                    getPrice(item.price) * item.quantity
-                  ).toFixed(2)}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* DISCOUNT */}
-          <div className="checkout-discount">
-            <input
-              type="text"
-              placeholder="Discount code or gift card"
-              value={discountCode}
-              onChange={(e) => {
-                setDiscountCode(e.target.value);
-                setDiscountMessage("");
-              }}
-            />
-
-            <button
-              type="button"
-              onClick={applyDiscount}
-            >
-              Apply
-            </button>
-          </div>
-
-          {discountMessage && (
-            <p className="checkout-discount-message">
-              {discountMessage}
-            </p>
-          )}
-
-          {/* TOTALS */}
-          <div className="checkout-totals">
-            <div>
-              <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
-            </div>
-
-            <div>
-              <span>Shipping</span>
-              <span>{checkoutData.shipping.label}</span>
-            </div>
-
-            <div className="checkout-total">
-              <span>Total</span>
-
-              <div>
-                <small>USD</small>
-                <strong>${total.toFixed(2)}</strong>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </aside>
-
+      <OrderSummary
+        cartItems={cartItems}
+        getPrice={getPrice}
+        subtotal={subtotal}
+        total={total}
+        shipping={checkoutData.shipping}
+        discountCode={discountCode}
+        setDiscountCode={setDiscountCode}
+        discountMessage={discountMessage}
+        applyDiscount={applyDiscount}
+      />
     </div>
   );
 };

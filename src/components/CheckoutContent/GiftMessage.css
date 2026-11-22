@@ -1,0 +1,108 @@
+/* =========================================
+   GIFT MESSAGE
+========================================= */
+
+.gift-message-container {
+  width: 100%;
+  margin-top: 22px;
+  margin-bottom: 15px;
+  border: 1px solid var(--checkout-border);
+  border-radius: 11px;
+  background: #fff;
+  overflow: hidden;
+  transition: border-color .2s ease;
+}
+
+.gift-message-container.active {
+  border-color: var(--checkout-accent);
+}
+
+/* GIFT MESSAGE CHECKBOX ROW */
+
+.gift-message-toggle {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #303030;
+}
+
+.gift-message-toggle input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--checkout-accent);
+  cursor: pointer;
+}
+
+.gift-message-toggle span {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.gift-message-toggle svg {
+  margin-left: 0;
+  color: #777;
+  flex-shrink: 0;
+}
+
+/* EXPANDED MESSAGE */
+
+.gift-message-fields {
+  padding: 0 14px 15px;
+  animation: giftMessageOpen .2s ease;
+}
+
+.gift-message-fields p {
+  margin: 0 0 10px;
+  color: #777;
+  font-size: 13px;
+}
+
+.gift-message-fields textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  border: 1px solid var(--checkout-border);
+  border-radius: 8px;
+  background: #fff;
+  color: #303030;
+  font-family: var(--ff-body);
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+  transition: border-color .2s ease;
+}
+
+.gift-message-fields textarea:focus {
+  border-color: var(--checkout-accent);
+}
+
+.gift-message-fields textarea::placeholder {
+  color: #999;
+}
+
+.gift-message-counter {
+  display: block;
+  margin-top: 6px;
+  color: #888;
+  font-size: 11px;
+  text-align: right;
+}
+
+@keyframes giftMessageOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
