@@ -1,0 +1,170 @@
+/* =========================================
+   PAYMENT SECTION
+========================================= */
+
+.checkout-subtitle {
+  margin: -4px 0 15px;
+  color: #777;
+  font-size: 13px;
+}
+
+.payment-options {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--checkout-border);
+  border-radius: 9px;
+  background: white;
+}
+
+.payment-option {
+  display: block;
+  border-bottom: 1px solid var(--checkout-border);
+  background: white;
+  cursor: pointer;
+}
+
+.payment-option:last-child {
+  border-bottom: 0;
+}
+
+.payment-option.selected {
+  border: 1px solid var(--checkout-accent);
+  background: #fff;
+}
+
+.payment-option-heading {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.payment-option-heading input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: var(--checkout-accent);
+}
+
+.payment-option-heading>span {
+  color: #222;
+}
+
+.payment-option-heading small {
+  margin-left: auto;
+  font-weight: var(--fw-bold);
+  color: #5433f5;
+}
+
+/* =========================================
+   CARD BRANDS
+========================================= */
+
+.card-brands {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+}
+
+.card-brands span {
+  min-width: 32px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 5px;
+  border-radius: 4px;
+  color: white;
+  font-size: 10px;
+  font-weight: var(--fw-bold);
+}
+
+.card-brands .visa {
+  background: #143cbb;
+}
+
+.card-brands .mastercard {
+  background: #161616;
+  color: #f12b31;
+}
+
+.card-brands .amex {
+  background: #1476ad;
+}
+
+.card-brands .more-cards {
+  background: white;
+  color: #555;
+  border: 1px solid #eee;
+}
+
+/* =========================================
+   CARD FIELDS
+========================================= */
+
+.card-fields {
+  padding: 15px;
+  background: #f7f7f7;
+}
+
+.card-fields input {
+  height: 46px;
+  margin-bottom: 10px;
+}
+
+.card-fields .checkout-input-row input {
+  width: 50%;
+}
+
+/* =========================================
+   BILLING ADDRESS
+========================================= */
+
+.same-billing-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0 16px;
+  font-size: 13px;
+}
+
+.same-billing-checkbox input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: var(--checkout-accent);
+  flex-shrink: 0;
+}
+
+.billing-fields {
+  padding: 0;
+  background: transparent;
+}
+
+.billing-fields h4 {
+  margin: 0 0 12px;
+  font-size: 15px;
+}
+
+/* =========================================
+   PAYMENT RESPONSIVE
+========================================= */
+
+@media (max-width: 480px) {
+  .card-brands {
+    gap: 3px;
+  }
+
+  .card-brands span {
+    min-width: 25px;
+    font-size: 8px;
+  }
+
+  .payment-option-heading {
+    padding: 11px 10px;
+  }
+}
