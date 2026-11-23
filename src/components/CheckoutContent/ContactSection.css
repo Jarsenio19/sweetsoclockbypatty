@@ -1,0 +1,73 @@
+/* =========================================
+   CONTACT SECTION
+========================================= */
+
+.checkout-section {
+  margin-bottom: 30px;
+}
+
+.checkout-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.checkout-section h3 {
+  font-size: 18px;
+  font-weight: var(--fw-bold);
+  margin: 0 0 13px;
+}
+
+.signin-link {
+  border: 0;
+  background: none;
+  color: var(--checkout-accent, var(--clr-primary-400));
+  text-decoration: underline;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* INPUT */
+
+.checkout-section input:not([type="checkbox"]):not([type="radio"]) {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  padding: 0 14px;
+  margin-bottom: 10px;
+  border: 1px solid #dedede;
+  border-radius: 8px;
+  background: #fff;
+  color: #303030;
+  font-family: var(--ff-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s ease;
+}
+
+.checkout-section input:focus {
+  border-color: var(--checkout-accent, var(--clr-primary-400));
+}
+
+.checkout-section input::placeholder {
+  color: #888;
+}
+
+/* CHECKBOX */
+
+.checkout-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 7px 0 15px;
+  font-size: 13px;
+}
+
+.checkout-checkbox input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: var(--checkout-accent, var(--clr-primary-400));
+  flex-shrink: 0;
+}
