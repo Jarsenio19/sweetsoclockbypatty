@@ -1,0 +1,40 @@
+/* =========================================
+   SHIPPING ADDRESS CARD
+========================================= */
+
+.additional-address-card {
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #dedede;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* ADDRESS HEADING */
+
+.address-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.address-card-heading h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: var(--fw-bold);
+}
+
+/* REMOVE BUTTON */
+
+.address-card-heading button {
+  border: none;
+  background: transparent;
+  color: #d33;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.address-card-heading button:hover {
+  opacity: 0.7;
+}

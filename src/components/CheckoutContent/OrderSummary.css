@@ -4,18 +4,45 @@
 
 .checkout-summary {
   min-width: 0;
+  min-height: 100%;
+  height: 100%;
   background: #f5f5f5;
   border-left: 1px solid #e5e5e5;
   padding: 55px 35px;
+  position: relative;
 }
+
+/* =========================================
+   STICKY SUMMARY
+========================================= */
 
 .checkout-summary-inner {
   width: 100%;
   max-width: 460px;
-
-  /* Move summary closer to center */
   margin-left: 0;
   margin-right: auto;
+
+  position: sticky;
+  top: 30px;
+  align-self: start;
+
+  animation: summaryFadeIn 0.6s ease both;
+}
+
+/* =========================================
+   STICKY ANIMATION
+========================================= */
+
+@keyframes summaryFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* =========================================
@@ -101,6 +128,11 @@
   background: white;
   font-size: 13px;
   outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.checkout-discount input:focus {
+  border-color: var(--clr-primary-400);
 }
 
 .checkout-discount button {
@@ -112,6 +144,13 @@
   color: #777;
   font-size: 13px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkout-discount button:hover {
+  background: #222;
+  color: white;
+  border-color: #222;
 }
 
 .checkout-discount-message {
@@ -160,7 +199,7 @@
 }
 
 /* =========================================
-   MOBILE RESPONSIVE
+   TABLET
 ========================================= */
 
 @media (max-width: 1100px) {
@@ -173,23 +212,44 @@
   }
 }
 
+/* =========================================
+   MOBILE
+========================================= */
+
 @media (max-width: 768px) {
   .checkout-summary {
     grid-row: 1;
+    height: auto;
+    min-height: auto;
     padding: 30px 25px;
     border-left: none;
     border-bottom: 1px solid #ddd;
   }
 
   .checkout-summary-inner {
+    position: static;
     max-width: 560px;
     margin-left: auto;
     margin-right: auto;
+    animation: none;
   }
 }
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
 
 @media (max-width: 480px) {
   .checkout-summary {
     padding: 25px 16px;
+  }
+
+  .checkout-product {
+    gap: 12px;
+  }
+
+  .checkout-product-image {
+    width: 60px;
+    height: 60px;
   }
 }

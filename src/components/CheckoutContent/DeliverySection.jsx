@@ -2,7 +2,7 @@
 import React from "react";
 
 import AddressFields from "./AddressFields";
-
+import ShippingAddressCard from "./ShippingAddressCard";
 import "./DeliverySection.css";
 
 const DeliverySection = ({
@@ -61,32 +61,18 @@ const DeliverySection = ({
 
           {/* ADDITIONAL ADDRESSES */}
           {additionalAddresses.map((address, index) => (
-            <div
-              className="additional-address-card"
+            <ShippingAddressCard
               key={address.id}
-            >
-              <div className="address-card-heading">
-
-                <h4>Shipping address {index + 2}</h4>
-
-                <button
-                  type="button"
-                  onClick={() => removeShippingAddress(address.id)}
-                >
-                  Remove
-                </button>
-
-              </div>
-
-              <AddressFields
-                address={address}
-                onChange={(e) =>
-                  updateAdditionalAddress(address.id, e)
-                }
-                countries={countries}
-              />
-
-            </div>
+              address={address}
+              index={index}
+              onChange={(e) =>
+                updateAdditionalAddress(address.id, e)
+              }
+              onRemove={() =>
+                removeShippingAddress(address.id)
+              }
+              countries={countries}
+            />
           ))}
 
           {/* ADD SHIPPING ADDRESS */}

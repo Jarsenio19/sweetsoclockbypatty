@@ -1,5 +1,5 @@
 /* =========================================
-   CHECKOUT PAGE - CENTERED LAYOUT
+   CHECKOUT PAGE - MAIN LAYOUT
 ========================================= */
 
 .checkout-container {
@@ -9,6 +9,7 @@
 
   display: grid;
   grid-template-columns: 50% 50%;
+  align-items: stretch;
   min-height: 100vh;
   background: #fff;
   color: #303030;
@@ -60,68 +61,6 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-}
-
-/* =========================================
-   EXPRESS CHECKOUT
-========================================= */
-
-.express-checkout {
-  margin-bottom: 25px;
-}
-
-.express-title {
-  text-align: center;
-  color: var(--checkout-muted);
-  font-size: 13px;
-  margin: 20px 0 15px;
-}
-
-.express-buttons {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.express-buttons button {
-  height: 50px;
-  border: 0;
-  border-radius: 7px;
-  font-size: 16px;
-  font-weight: var(--fw-bold);
-  cursor: pointer;
-}
-
-.shop-pay {
-  background: #5433f5;
-  color: white;
-}
-
-.paypal {
-  background: #ffc439;
-  color: #111;
-}
-
-.google-pay {
-  background: #080808;
-  color: white;
-}
-
-.checkout-or {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin: 22px 0;
-  color: #888;
-  font-size: 13px;
-}
-
-.checkout-or::before,
-.checkout-or::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: #e5e5e5;
 }
 
 /* =========================================
@@ -359,13 +298,5 @@
 
   .checkout-input-row {
     gap: 7px;
-  }
-
-  .express-buttons {
-    gap: 7px;
-  }
-
-  .express-buttons button {
-    font-size: 14px;
   }
 }
