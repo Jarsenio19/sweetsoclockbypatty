@@ -369,7 +369,7 @@ const Cart = () => {
                   <button
                     className="multiple-address-btn"
                     onClick={() => {
-                      navigate("/checkout", {
+                      navigate("/ship-multiple-addresses", {
                         state: {
                           cartItems,
                           multipleAddresses: true,

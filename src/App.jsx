@@ -5,6 +5,7 @@ import Landing from "./pages/Landing";
 import SignIn from "./pages/SignIn";
 import Shop from "./pages/Shop";
 import Checkout from "./pages/Checkout";
+import ShipMultipleAddresses from "./pages/ShipMultipleAddresses";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Route path="/signin" element={<SignIn />} />
       <Route path="/shop" element={<Shop />} />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/ship-multiple-addresses" element={<ShipMultipleAddresses />} />
     </Routes>
   );
 };
