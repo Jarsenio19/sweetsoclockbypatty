@@ -1,0 +1,276 @@
+/* =========================================
+   MULTIPLE ADDRESS PAYMENT
+========================================= */
+
+.multiple-address-payment {
+  width: 100%;
+  color: #202020;
+  font-family: var(--ff-body);
+  font-size: var(--fs-300);
+}
+
+.multiple-address-payment h3 {
+  margin: 0 0 5px;
+  font-family: var(--ff-heading);
+  font-size: var(--fs-600);
+  font-weight: var(--fw-bold);
+}
+
+/* =========================================
+   SUBTITLE
+========================================= */
+
+.multiple-payment-subtitle {
+  margin: 0 0 13px;
+  color: #777;
+  font-size: var(--fs-300);
+  font-weight: var(--fw-regular);
+}
+
+/* =========================================
+   FREE PAYMENT NOTICE
+========================================= */
+
+.free-payment-notice {
+  width: 100%;
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 13px;
+  padding: 10px;
+  border-radius: 11px;
+  background: #f4f4f4;
+  color: #555;
+  font-size: var(--fs-300);
+  font-weight: var(--fw-regular);
+  text-align: center;
+}
+
+/* =========================================
+   BILLING ADDRESS
+========================================= */
+
+.multiple-billing-address {
+  width: 100%;
+}
+
+.multiple-billing-address h4 {
+  margin: 0 0 12px;
+  font-family: var(--ff-heading);
+  font-size: var(--fs-400);
+  font-weight: var(--fw-bold);
+}
+
+/* =========================================
+   INPUTS AND SELECTS
+========================================= */
+
+.multiple-address-payment input,
+.multiple-address-payment select {
+  width: 100%;
+  min-width: 0;
+  height: 45px;
+  padding: 0 10px;
+  border: 1px solid #dedede;
+  border-radius: 11px;
+  background: #fff;
+  color: #303030;
+  font-family: var(--ff-body);
+  font-size: var(--fs-300);
+  font-weight: var(--fw-regular);
+  outline: none;
+  transition: border-color .2s ease;
+}
+
+.multiple-address-payment input::placeholder {
+  color: #858585;
+  opacity: 1;
+}
+
+.multiple-address-payment input:focus,
+.multiple-address-payment select:focus {
+  border-color: var(--clr-primary-400);
+}
+
+/* =========================================
+   COUNTRY
+========================================= */
+
+.multiple-address-field {
+  position: relative;
+  margin-bottom: 9px;
+}
+
+.multiple-address-field label {
+  position: absolute;
+  top: 6px;
+  left: 11px;
+  z-index: 1;
+  color: #777;
+  font-size: var(--fs-100);
+  font-weight: var(--fw-regular);
+  pointer-events: none;
+}
+
+.multiple-address-field select {
+  height: 44px;
+  padding: 15px 10px 3px;
+  appearance: auto;
+}
+
+/* =========================================
+   INPUT ROWS
+========================================= */
+
+.multiple-address-row {
+  display: flex;
+  gap: 9px;
+  margin-bottom: 9px;
+}
+
+.multiple-address-row>* {
+  flex: 1;
+  min-width: 0;
+}
+
+.multiple-billing-address>input {
+  margin-bottom: 9px;
+}
+
+/* =========================================
+   ADDRESS SEARCH ICON
+========================================= */
+
+.multiple-address-input {
+  position: relative;
+  margin-bottom: 9px;
+}
+
+.multiple-address-input input {
+  padding-right: 38px;
+}
+
+.address-search-icon {
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  display: flex;
+  align-items: center;
+  transform: translateY(-50%);
+  color: #777;
+  pointer-events: none;
+}
+
+/* =========================================
+   CITY / STATE / ZIP
+========================================= */
+
+.multiple-location-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* =========================================
+   SAVE INFORMATION
+========================================= */
+
+.multiple-save-information {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.save-information-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.save-information-content label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--fs-300);
+  font-weight: var(--fw-regular);
+  cursor: pointer;
+}
+
+.save-information-content label input {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin: 0;
+  accent-color: var(--clr-primary-400);
+}
+
+.save-information-content p {
+  margin: 3px 0 0;
+  color: #777;
+  font-size: var(--fs-100);
+  font-weight: var(--fw-regular);
+  line-height: 1.35;
+}
+
+.save-information-content a {
+  color: #555;
+  text-decoration: underline;
+}
+
+/* =========================================
+   NOT NOW BUTTON
+========================================= */
+
+.multiple-not-now {
+  flex-shrink: 0;
+  min-width: 75px;
+  height: 43px;
+  padding: 0 12px;
+  border: 1px solid #dedede;
+  border-radius: 11px;
+  background: #fff;
+  color: var(--clr-primary-400);
+  font-family: var(--ff-button);
+  font-size: var(--fs-300);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.multiple-not-now:hover {
+  background: var(--clr-neutral-100);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 480px) {
+
+  .multiple-location-row {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 7px;
+  }
+
+  .multiple-address-row {
+    gap: 8px;
+  }
+
+  .multiple-save-information {
+    gap: 7px;
+  }
+
+  .save-information-content label {
+    font-size: var(--fs-100);
+  }
+
+  .save-information-content p {
+    font-size: var(--fs-100);
+  }
+
+  .multiple-not-now {
+    min-width: 68px;
+    padding: 0 9px;
+  }
+}

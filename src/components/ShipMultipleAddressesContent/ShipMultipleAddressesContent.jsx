@@ -5,32 +5,66 @@ import { useLocation, useNavigate } from "react-router";
 import Logo from "../../common/Logo/Logo";
 import { checkoutData } from "../../data/Data";
 
-import DeliverySection from "../CheckoutContent/DeliverySection";
-import "./ShipMultipleAddressesContent.css";
+import ExpressCheckout from "../CheckoutContent/ExpressCheckout";
+import ContactSection from "../CheckoutContent/ContactSection";
+
+import MultipleAddressShippingProductCard from "./MultipleAddressShippingProductCard";
 import MultipleAddressOrderSummary from "./MultipleAddressOrderSummary";
+import MultipleAddressPayment from "./MultipleAddressPayment";
+
+import "./ShipMultipleAddressesContent.css";
 
 const ShipMultipleAddressesContent = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // =========================================
   // CART DATA
+  // =========================================
+
   const cartItems = location.state?.cartItems || [];
 
+  // =========================================
   // PRICE CONVERSION
+  // =========================================
+
   const getPrice = (price) => {
     return Number(String(price).replace(/[^0-9.]/g, "")) || 0;
   };
 
+  // =========================================
   // TOTALS
+  // =========================================
+
   const subtotal = cartItems.reduce(
-    (total, item) => total + getPrice(item.price) * item.quantity,
+    (total, item) =>
+      total + getPrice(item.price) * item.quantity,
     0
   );
 
   const shipping = checkoutData.shipping.price;
   const total = subtotal + shipping;
 
-  // ADDRESS STATES
+  // =========================================
+  // EXPRESS CHECKOUT
+  // =========================================
+
+  const [paymentMethod, setPaymentMethod] = useState("");
+
+  // =========================================
+  // CONTACT STATES
+  // =========================================
+
+  const [email, setEmail] = useState(
+    location.state?.email || ""
+  );
+
+  const [emailOffers, setEmailOffers] = useState(false);
+
+  // =========================================
+  // SHIPPING ADDRESS STATES
+  // =========================================
+
   const [shippingAddress, setShippingAddress] = useState(
     location.state?.shippingAddress || {
       ...checkoutData.defaultAddress,
@@ -45,11 +79,49 @@ const ShipMultipleAddressesContent = () => {
     location.state?.productAddresses || {}
   );
 
+  // =========================================
+  // BILLING ADDRESS STATES
+  // =========================================
+
+  const [billingAddress, setBillingAddress] = useState(
+    location.state?.billingAddress || {
+      country: "United States",
+      firstName: "",
+      lastName: "",
+      address: "",
+      apartment: "",
+      city: "",
+      state: "",
+      zip: "",
+      phone: "",
+    }
+  );
+
+  const [saveInformation, setSaveInformation] = useState(
+    location.state?.saveInformation || false
+  );
+
+  // UPDATE BILLING ADDRESS
+  const updateBilling = (e) => {
+    const { name, value } = e.target;
+
+    setBillingAddress((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // =========================================
   // DISCOUNT STATES
+  // =========================================
+
   const [discountCode, setDiscountCode] = useState("");
   const [discountMessage, setDiscountMessage] = useState("");
 
+  // =========================================
   // UPDATE MAIN SHIPPING ADDRESS
+  // =========================================
+
   const updateShipping = (e) => {
     const { name, value } = e.target;
 
@@ -59,7 +131,10 @@ const ShipMultipleAddressesContent = () => {
     }));
   };
 
+  // =========================================
   // UPDATE ADDITIONAL ADDRESS
+  // =========================================
+
   const updateAdditionalAddress = (id, e) => {
     const { name, value } = e.target;
 
@@ -72,7 +147,10 @@ const ShipMultipleAddressesContent = () => {
     );
   };
 
+  // =========================================
   // ADD SHIPPING ADDRESS
+  // =========================================
+
   const addShippingAddress = () => {
     setAdditionalAddresses((prev) => [
       ...prev,
@@ -91,13 +169,15 @@ const ShipMultipleAddressesContent = () => {
     ]);
   };
 
+  // =========================================
   // REMOVE SHIPPING ADDRESS
+  // =========================================
+
   const removeShippingAddress = (id) => {
     setAdditionalAddresses((prev) =>
       prev.filter((address) => address.id !== id)
     );
 
-    // Reassign products from removed address to main address
     setProductAddresses((prev) => {
       const updated = {};
 
@@ -110,7 +190,10 @@ const ShipMultipleAddressesContent = () => {
     });
   };
 
+  // =========================================
   // ASSIGN PRODUCT TO ADDRESS
+  // =========================================
+
   const assignProductAddress = (index, addressId) => {
     setProductAddresses((prev) => ({
       ...prev,
@@ -118,7 +201,10 @@ const ShipMultipleAddressesContent = () => {
     }));
   };
 
+  // =========================================
   // DISCOUNT CODE
+  // =========================================
+
   const applyDiscount = () => {
     if (!discountCode.trim()) {
       setDiscountMessage("Please enter a discount code.");
@@ -127,7 +213,10 @@ const ShipMultipleAddressesContent = () => {
     }
   };
 
+  // =========================================
   // VALIDATE ADDRESS
+  // =========================================
+
   const isAddressComplete = (address) => {
     return Boolean(
       address?.address?.trim() &&
@@ -136,13 +225,21 @@ const ShipMultipleAddressesContent = () => {
     );
   };
 
+  // =========================================
   // CONTINUE TO CHECKOUT
+  // =========================================
+
   const handleContinue = (e) => {
     e.preventDefault();
 
     if (!cartItems.length) return;
 
-    // Check every product assignment
+    if (!email.trim()) {
+      alert("Please enter your email address.");
+      return;
+    }
+
+    // CHECK EVERY PRODUCT SHIPPING ADDRESS
     const hasInvalidAddress = cartItems.some((_, index) => {
       const addressId = productAddresses[index] || "main";
 
@@ -164,20 +261,37 @@ const ShipMultipleAddressesContent = () => {
       return;
     }
 
-    // Continue to existing checkout page
+    // NAVIGATE TO CHECKOUT
     navigate("/checkout", {
       state: {
         ...location.state,
+
         cartItems,
+
+        // CONTACT
+        email,
+        emailOffers,
+
+        // PAYMENT
+        paymentMethod,
+
+        // SHIPPING
         multipleAddresses: true,
         shippingAddress,
         additionalAddresses,
         productAddresses,
+
+        // BILLING
+        billingAddress,
+        saveInformation,
       },
     });
   };
 
+  // =========================================
   // EMPTY CART
+  // =========================================
+
   if (!cartItems.length) {
     return (
       <div className="checkout-empty">
@@ -196,10 +310,17 @@ const ShipMultipleAddressesContent = () => {
     );
   }
 
+  // =========================================
+  // MAIN COMPONENT
+  // =========================================
+
   return (
     <div className="multi-address-container">
 
-      {/* LEFT SIDE */}
+      {/* =====================================
+          LEFT SIDE
+      ===================================== */}
+
       <main className="multi-address-main">
 
         <div className="multi-address-wrapper">
@@ -209,66 +330,63 @@ const ShipMultipleAddressesContent = () => {
             <Logo />
           </div>
 
-          {/* PAGE HEADING */}
-          <div className="multi-address-heading">
-            <h2>Ship to multiple addresses</h2>
+          {/* EXPRESS CHECKOUT */}
+          <ExpressCheckout
+            setPaymentMethod={setPaymentMethod}
+          />
 
-            <p>
-              Send your products to different locations.
-              Assign each product to its preferred shipping address.
-            </p>
-          </div>
-
+          {/* CHECKOUT FORM */}
           <form onSubmit={handleContinue}>
 
-            {/* DELIVERY SECTION */}
-            <DeliverySection
-              multipleAddresses={true}
-              setMultipleAddresses={() => { }}
-              shippingAddress={shippingAddress}
-              updateShipping={updateShipping}
-              additionalAddresses={additionalAddresses}
-              addShippingAddress={addShippingAddress}
-              removeShippingAddress={removeShippingAddress}
-              updateAdditionalAddress={updateAdditionalAddress}
-              productAddresses={productAddresses}
-              assignProductAddress={assignProductAddress}
-              cartItems={cartItems}
-              countries={checkoutData.countries}
+            {/* =================================
+                CONTACT SECTION
+            ================================= */}
+
+            <ContactSection
+              email={email}
+              setEmail={setEmail}
+              emailOffers={emailOffers}
+              setEmailOffers={setEmailOffers}
+              navigate={navigate}
             />
 
-            {/* ADDRESS SUMMARY */}
-            <div className="multi-address-info">
-              <h4>Shipping information</h4>
+            {/* =================================
+                MULTIPLE ADDRESS PRODUCT CARD
+            ================================= */}
 
-              <p>
-                Each product can be shipped to a different
-                address. Make sure every product is assigned
-                to a complete shipping address.
-              </p>
-
-              <div className="multi-address-count">
-                <span>Shipping addresses</span>
-
-                <strong>
-                  {additionalAddresses.length + 1}
-                </strong>
-              </div>
-
-              <div className="multi-address-count">
-                <span>Products in your order</span>
-
-                <strong>{cartItems.length}</strong>
-              </div>
+            <div className="shipping-product-wrapper">
+              <MultipleAddressShippingProductCard
+                cartItems={cartItems}
+              />
             </div>
 
-            {/* CONTINUE BUTTON */}
+            {/* =================================
+                MULTIPLE ADDRESS PAYMENT
+            ================================= */}
+
+            <MultipleAddressPayment
+              billingAddress={billingAddress}
+              updateBilling={updateBilling}
+              countries={checkoutData.countries}
+              saveInformation={saveInformation}
+              setSaveInformation={setSaveInformation}
+              onNotNow={() => setSaveInformation(false)}
+            />
+
+            {/* =================================
+                CONTINUE BUTTON
+            ================================= */}
+
             <button
               type="submit"
               className="multi-address-continue"
             >
               Continue to checkout
             </button>
+
+            {/* =================================
+                RETURN TO CART
+            ================================= */}
 
             <button
               type="button"
@@ -280,7 +398,10 @@ const ShipMultipleAddressesContent = () => {
 
           </form>
 
-          {/* FOOTER */}
+          {/* =================================
+              FOOTER
+          ================================= */}
+
           <footer className="checkout-footer">
             {checkoutData.policies.map((policy) => (
               <a
@@ -295,7 +416,10 @@ const ShipMultipleAddressesContent = () => {
         </div>
       </main>
 
-      {/* RIGHT SIDE - MULTIPLE ADDRESS ORDER SUMMARY */}
+      {/* =====================================
+          RIGHT SIDE - ORDER SUMMARY
+      ===================================== */}
+
       <aside className="multi-address-summary">
 
         <MultipleAddressOrderSummary

@@ -38,3 +38,24 @@
 .address-card-heading button:hover {
   opacity: 0.7;
 }
+
+
+
+/* =========================================
+   SHIPPING PRODUCT BELOW CONTACT SECTION
+========================================= */
+
+.shipping-product-wrapper {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 25px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+  .shipping-product-wrapper {
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
+}

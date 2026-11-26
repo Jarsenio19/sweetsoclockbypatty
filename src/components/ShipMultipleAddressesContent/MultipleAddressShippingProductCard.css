@@ -1,0 +1,264 @@
+/* =========================================
+   MULTIPLE ADDRESS SHIPPING
+========================================= */
+
+.multiple-address-shipping {
+  width: 100%;
+  margin-top: 20px;
+  box-sizing: border-box;
+  font-family: var(--ff-body);
+}
+
+/* SHIPPING HEADING */
+
+.multiple-address-shipping-title {
+  margin: 0 0 14px;
+  font-family: var(--ff-heading);
+  font-size: var(--fs-400);
+  font-weight: var(--fw-semi-bold);
+  color: #111;
+}
+
+/* =========================================
+   PRODUCT LIST
+========================================= */
+
+.multiple-address-product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* PRODUCT CARD */
+
+.multiple-address-product-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  min-height: 65px;
+  padding: 14px;
+  border: 1px solid #dedede;
+  border-radius: 12px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+/* PRODUCT IMAGE */
+
+.multiple-address-product-image {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.multiple-address-product-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* QUANTITY BADGE */
+
+.multiple-address-product-quantity {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  font-family: var(--ff-body);
+  font-size: var(--fs-100);
+  font-weight: var(--fw-bold);
+}
+
+/* PRODUCT NAME */
+
+.multiple-address-product-name {
+  font-family: var(--ff-body);
+  font-size: var(--fs-300);
+  font-weight: var(--fw-regular);
+  color: #222;
+  line-height: 1.4;
+}
+
+/* =========================================
+   ADD SHIPPING ADDRESS BUTTON
+========================================= */
+
+.multiple-address-add-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  height: 42px;
+  margin-top: 13px;
+  border: none;
+  border-radius: 11px;
+  background: var(--clr-primary-400);
+  color: #fff;
+  font-family: var(--ff-body);
+  font-size: var(--fs-300);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.multiple-address-add-button:hover:not(:disabled) {
+  background: hsl(11, 65%, 48%);
+}
+
+.multiple-address-add-button:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+
+.multiple-address-plus {
+  font-size: var(--fs-700);
+  font-weight: var(--fw-regular);
+  line-height: 1;
+}
+
+/* =========================================
+   ADDRESS LIMIT
+========================================= */
+
+.multiple-address-limit {
+  margin: 7px 0 19px;
+  text-align: center;
+  color: #777;
+  font-family: var(--ff-body);
+  font-size: var(--fs-100);
+  font-weight: var(--fw-regular);
+}
+
+/* =========================================
+   DISCOUNT CODE
+========================================= */
+
+.multiple-address-discount h4 {
+  margin: 0 0 12px;
+  font-family: var(--ff-heading);
+  font-size: var(--fs-400);
+  font-weight: var(--fw-semi-bold);
+  color: #111;
+}
+
+/* DISCOUNT INPUT AND BUTTON */
+
+.multiple-address-discount-form {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  width: 100%;
+}
+
+/* DISCOUNT INPUT */
+
+.multiple-address-discount-form input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 11px;
+  outline: none;
+  background: #fff;
+  color: #222;
+  font-family: var(--ff-body);
+  font-size: var(--fs-300);
+  font-weight: var(--fw-regular);
+  box-sizing: border-box;
+}
+
+.multiple-address-discount-form input::placeholder {
+  color: #b5b5b5;
+}
+
+.multiple-address-discount-form input:focus:not(:disabled) {
+  border-color: var(--clr-primary-400);
+}
+
+.multiple-address-discount-form input:disabled {
+  background: #fafafa;
+  cursor: not-allowed;
+}
+
+/* APPLY BUTTON */
+
+.multiple-address-discount-form button {
+  width: 59px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid #e5e5e5;
+  border-radius: 11px;
+  background: #fff;
+  color: #888;
+  font-family: var(--ff-body);
+  font-size: var(--fs-300);
+  font-weight: var(--fw-semi-bold);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.multiple-address-discount-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.multiple-address-discount-form button:not(:disabled) {
+  background: var(--clr-primary-400);
+  border-color: var(--clr-primary-400);
+  color: #fff;
+}
+
+.multiple-address-discount-form button:not(:disabled):hover {
+  background: hsl(11, 65%, 48%);
+  border-color: hsl(11, 65%, 48%);
+}
+
+/* =========================================
+   DISCOUNT MESSAGE
+========================================= */
+
+.multiple-address-discount-message {
+  margin: 8px 0 0;
+  color: var(--clr-primary-400);
+  font-family: var(--ff-body);
+  font-size: var(--fs-300);
+  font-weight: var(--fw-regular);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .multiple-address-shipping {
+    margin-top: 15px;
+  }
+
+  .multiple-address-product-card {
+    padding: 12px;
+  }
+
+  .multiple-address-discount-form {
+    gap: 8px;
+  }
+
+  .multiple-address-discount-form button {
+    width: 59px;
+  }
+
+}
