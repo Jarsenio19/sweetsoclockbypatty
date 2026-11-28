@@ -1,3 +1,4 @@
+/* PRODUCT CARD */
 .sales-box {
   width: 350px;
   height: 520px;
@@ -7,35 +8,45 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
+/* PRODUCT IMAGE */
 .sales-box img {
   width: 100%;
-  height: 380px;
+  height: 340px;
   display: block;
   object-fit: cover;
 }
 
+/* PRODUCT INFORMATION */
 .product-info {
-  padding: 10px;
+  padding: 7px;
 }
 
+/* PRODUCT NAME */
 .product-info h3 {
   margin: 0;
-  padding: 0 25px 25px 10px;
+  padding: 5px 10px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
   font-family: 'pokota';
   border: 1px solid var(--clr-neutral-100);
 }
 
+/* PRODUCT BOTTOM */
 .product-bottom {
   display: flex;
   justify-content: space-between;
   border: 1px solid var(--clr-neutral-100);
 }
 
-.product-type,
-.product-price {
+/* PRODUCT TYPE */
+.product-type {
   flex: 1;
+  padding: 5px;
+  border-right: 1px solid var(--clr-neutral-100);
 }
 
+/* PRICE SECTION */
 .product-price {
   flex: 0;
   display: flex;
@@ -43,6 +54,8 @@
   align-items: flex-start;
   text-align: right;
   padding: 5px 20px 5px 10px;
+  min-width: 90px;
+  flex-shrink: 0;
 }
 
 .price-row {
@@ -51,16 +64,22 @@
   gap: 5px;
 }
 
-/* if this for sale price */
+/* PRICE FONT */
+.price1 {
+  font-family: var(--ff-primary);
+  font-size: var(--fs-700);
+  font-weight: var(--fw-bold);
+  color: var(--clr-neutral-100);
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* SALE PRICE */
 .price2 {
   display: none;
 }
 
-.product-type {
-  border-right: 1px solid var(--clr-neutral-100);
-  padding: 5px;
-}
-
+/* PRODUCT LABELS */
 .product-bottom span {
   display: block;
   letter-spacing: 2px;
@@ -76,8 +95,30 @@
   color: var(--clr-neutral-100);
 }
 
-/* Give price enough room */
-.product-price {
-  min-width: 90px;
-  flex-shrink: 0;
+/* ADD TO CART BUTTON */
+.add-to-cart {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--clr-neutral-100);
+  background: #fff;
+  color: var(--clr-primary-400);
+  font-family: var(--ff-primary);
+  font-size: var(--fs-600);
+  font-weight: var(--fw-semi-bold);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* HOVER EFFECT */
+.add-to-cart:hover {
+  background: var(--clr-primary-400);
+  color: #fff;
+  font-weight: var(--fw-bold);
+  border: 1px solid var(--clr-neutral-100);
+}
+
+/* KEYBOARD FOCUS */
+.add-to-cart:focus-visible {
+  outline: 2px solid var(--clr-primary-400);
+  outline-offset: 3px;
 }

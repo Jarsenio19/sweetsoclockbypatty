@@ -173,12 +173,9 @@ export const dropdownData = {
   story: {
     columns: [
       {
-        title: "ABOUT US",
+        title: "OUR STORY",
         links: [
-          "Our History",
-          "Our Ingredients",
-          "Our Philosophy",
-          "Our Team",
+          "Baked Better",
         ],
       },
     ],
