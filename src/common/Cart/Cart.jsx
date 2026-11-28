@@ -28,7 +28,7 @@ const Cart = () => {
     return Number(String(price).replace(/[^0-9.]/g, "")) || 0;
   };
 
-  // ADD PRODUCT
+  // ADD PRODUCT TO CART
   const addToCart = (product) => {
     setCartItems((prev) => {
       const existing = prev.find(
@@ -93,7 +93,7 @@ const Cart = () => {
     0
   );
 
-  // SHIPPING
+  // FREE SHIPPING
   const remainingShipping = Math.max(
     FREE_SHIPPING - subtotal,
     0
@@ -113,7 +113,7 @@ const Cart = () => {
     }
   };
 
-  // CONNECT TO CHECKOUT
+  // CHECKOUT
   const handleCheckout = () => {
     if (!cartItems.length) return;
 
@@ -126,17 +126,34 @@ const Cart = () => {
     setCartOpen(false);
   };
 
-  // PRODUCTS
+  // CLICKABLE PRODUCT CARDS
   const renderProducts = () => (
     <div className="products-slider">
       {carouselCardsData.map((product) => (
-        <div className="product-card" key={product.name}>
+        <div
+          className="product-card"
+          key={product.name}
+          onClick={() => addToCart(product)}
+          style={{ cursor: "pointer" }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              addToCart(product);
+            }
+          }}
+          aria-label={`Add ${product.name} to cart`}
+        >
           <div className="product-image">
             <img src={product.image} alt={product.name} />
 
             <button
               className="add-product-btn"
-              onClick={() => addToCart(product)}
+              onClick={(e) => {
+                e.stopPropagation();
+                addToCart(product);
+              }}
               aria-label={`Add ${product.name} to cart`}
             >
               <IoAdd />
@@ -263,7 +280,10 @@ const Cart = () => {
                 {cartItems.map((item) => (
                   <div className="cart-item" key={item.name}>
 
-                    <img src={item.image} alt={item.name} />
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                    />
 
                     <div className="cart-item-info">
                       <h3>{item.name}</h3>

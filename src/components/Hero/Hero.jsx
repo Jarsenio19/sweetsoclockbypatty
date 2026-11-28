@@ -1,3 +1,4 @@
+
 import "./Hero.css";
 import PrimaryButton from "../../common/PrimaryButton/PrimaryButton";
 import { heroData } from "../../data/Data";
@@ -14,11 +15,21 @@ const Hero = () => {
     <section className="hero-container">
       {heroData.map((item) => (
         <div className="hero-content" key={item.id}>
+
           <div className="hero-image-wrapper">
             <img
               src={item.image}
               alt={item.alt}
               className="hero-image"
+              onClick={handleShopClick}
+              role="link"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleShopClick();
+                }
+              }}
             />
           </div>
 
@@ -42,6 +53,7 @@ const Hero = () => {
           </div>
 
           <div className="description-box"></div>
+
         </div>
       ))}
     </section>
